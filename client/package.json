@@ -1,0 +1,40 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "author": "Konstantin Zhukovskij, Dmitrij Apanasik",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "draft-js": "^0.10.5",
+    "draftjs-to-html": "^0.8.4",
+    "html-to-draftjs": "^1.4.0",
+    "jquery": "^3.3.1",
+    "react": "^16.6.1",
+    "react-bootstrap": "^0.32.4",
+    "react-dom": "^16.6.1",
+    "react-draft-wysiwyg": "^1.12.13",
+    "react-js-pagination": "^3.0.2",
+    "react-redux-toastr": "^7.4.1",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.1",
+    "react-toastr": "^3.0.0",
+    "toastr": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:3001",
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
