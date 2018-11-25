@@ -19,6 +19,27 @@ repository.getAllSummaries = () => {
     });
 };
 
+repository.getPaginationSummaries = (limit, offset) => {
+    return db.Summary.findAll({
+        limit: limit,
+        offset: offset,
+        subQuery: false,
+        include: [{
+            model: db.User
+        }],
+        order: [
+            ['id', 'DESC']
+        ],
+    }).then((summaries) => {
+        return db.Summary.count().then((count) => {
+            return {
+                summaries: summaries,
+                count: count
+            }
+        })
+    });
+};
+
 repository.getSummaryById = (id) => {
     return db.Summary.findById(id, {
         include: [{

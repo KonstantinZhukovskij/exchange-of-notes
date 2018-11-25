@@ -20,8 +20,18 @@ exports.postSummary = (req, res) => {
 
 exports.getAllSummaries = (req, res) => {
     SummaryRepository.getAllSummaries()
-        .then((allSummary) => {
-            res.json(allSummary)
+        .then((allSummaries) => {
+            res.json(allSummaries)
+        })
+        .catch((error) => {
+            res.json(error)
+        })
+};
+
+exports.getPaginationSummaries = (req, res) => {
+    SummaryRepository.getPaginationSummaries(req.query.limit, req.query.offset)
+        .then((paginationSummaries) => {
+            res.json(paginationSummaries)
         })
         .catch((error) => {
             res.json(error)

@@ -93,7 +93,7 @@ repository.changeUserPswAndResetToken = (token, newPassword) => {
 repository.linkVkProfile = () => {
 };
 
-repository.createAccFromTwitter = () => {
+repository.createAccFromVK = () => {
 };
 
 repository.linkFacebookProfile = (userId, accessToken, refreshToken, profile) => {
@@ -116,6 +116,8 @@ repository.linkFacebookProfile = (userId, accessToken, refreshToken, profile) =>
 };
 
 repository.createAccFromFacebook = (accessToken, refreshToken, profile) => {
+    console.log("-----------createAcc");
+
     if (!profile._json) {
         throw 'Facebook profile is missing json property!';
     }

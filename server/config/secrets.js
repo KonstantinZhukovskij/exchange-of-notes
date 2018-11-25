@@ -3,7 +3,7 @@ module.exports = {
     sessionSecret: process.env.SESSION_SECRET || 'Your Session Secret goes here',
 
     postgres: {},
-    sessionTable: 'session',
+    sessionTable: 'Session',
 
     mailgun: {
         user: process.env.MAILGUN_USER || 'postmaster@sandbox697fcddc09814c6b83718b9fd5d4e5dc.mailgun.org',
@@ -31,7 +31,7 @@ module.exports = {
     twitter: {
         consumerKey: process.env.TWITTER_KEY || '6NNBDyJ2TavL407A3lWxPFKBI',
         consumerSecret: process.env.TWITTER_SECRET || 'ZHaYyK3DQCqv49Z9ofsYdqiUgeoICyh6uoBgFfu7OeYC7wTQKa',
-        callbackURL: '/auth/twitter/callback',
+        callbackURL: 'http://localhost:3001/auth/twitter/callback',
         passReqToCallback: true,
         enableProof: true,
         authOptions: {}

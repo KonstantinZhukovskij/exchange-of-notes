@@ -16,6 +16,17 @@ export function getAllSummaries() {
     return axios.get('/summary');
 }
 
+export function getPaginationSummaries(limit, offset) {
+    return axios.get('/paginationSummary',
+        {
+            params: {
+                limit: limit,
+                offset: offset,
+            }
+        }
+    );
+}
+
 export function getSummaryById(id) {
     return axios.get('/summary/' + id)
 }

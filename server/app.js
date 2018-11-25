@@ -82,6 +82,9 @@ app.post('/registration', userController.postRegistration);
 app.get('/logout', userController.logout);
 app.post('/forgot', userController.postForgot);
 app.get('/summary', summaryController.getAllSummaries);
+app.get('/paginationSummary', summaryController.getPaginationSummaries);
+
+
 app.get('/summary/:id', summaryController.getSummaryById);
 app.put('/summary/:id', summaryController.updateSummary);
 app.get('/reset/:token', userController.getReset);
@@ -101,12 +104,9 @@ safeRedirectToReturnTo = (req, res) => {
     res.redirect('http://localhost:3000');
 };
 
-app.get('/auth/facebook', (req, res, next) => {
-    console.log("------AUTH", req.isAuthenticated());
-    console.log("-------------REQ USER", req.user)
-
-}, passport.authenticate('facebook', secrets.facebook.authOptions));
+app.get('/auth/facebook', passport.authenticate('facebook', secrets.facebook.authOptions));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+    successRedirect: '/',
     failureRedirect: 'http://localhost:3000/login',
 }), safeRedirectToReturnTo);
 
