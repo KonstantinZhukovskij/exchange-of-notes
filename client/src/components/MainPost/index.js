@@ -32,8 +32,12 @@ export default class MainPost extends React.Component {
                     </ul>
                     <ul className="stats" id="ratings">
                         <li>Рейтинг</li>
-                        <li><p className="icon fa-heart">{this.props.likes}</p></li>
-                        <li><p className="icon fa-comment">{this.props.commentCount}</p></li>
+                        <li>
+                            <p className="icon fa-heart">{this.props.likes == null ? '0' : this.props.likes}</p>
+                        </li>
+                        <li>
+                            <p className="icon fa-comment">{this.props.commentCount == null ? '0' : this.props.commentCount}</p>
+                        </li>
                     </ul>
                 </footer>
             </article>

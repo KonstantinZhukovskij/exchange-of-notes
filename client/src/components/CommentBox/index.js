@@ -10,8 +10,11 @@ export default class CommentBox extends React.Component {
         }
         return (
             <div>
-                <p>{this.props.comment}</p>
-                <p>Автор: {author}</p>
+                <div>
+                    <p>{this.props.comment}</p>
+                    <p>Автор: {author}</p>
+                </div>
+                <hr/>
             </div>
         );
 

@@ -979,10 +979,6 @@ ul.icons li > * .label {
     display: -webkit-flex;
     display: -ms-flex;
     display: flex;
-    -moz-align-items: center;
-    -webkit-align-items: center;
-    -ms-align-items: center;
-    align-items: center;
 }
 
 .post > footer .actions {
@@ -2453,4 +2449,8 @@ body {
 
 #ratings {
     font-size: 1.2em;
+}
+
+#addComment {
+    margin-top: 10px;
 }

@@ -142,14 +142,6 @@ class SinglePost extends React.Component {
                 </ul>
                 <footer>
                     <h3>Комментарии</h3>
-                    <div>
-                        {this.state.comments.map((comment, i) =>
-                            <CommentBox id={comment.id}
-                                        comment={comment.text}
-                                        firstName={comment.User.firstName}
-                                        lastName={comment.User.lastName}
-                                        key={i}/>)}
-                    </div>
                     <ul className="stats">
                         <li>Мне нравится</li>
                         <li id="heart">
@@ -158,11 +150,22 @@ class SinglePost extends React.Component {
                         </li>
                     </ul>
                 </footer>
+                <hr/>
                 <form>
+                    <div id="commentsInput">
+                        <div>
+                            {this.state.comments.map((comment, i) =>
+                                <CommentBox id={comment.id}
+                                            comment={comment.text}
+                                            firstName={comment.User.firstName}
+                                            lastName={comment.User.lastName}
+                                            key={i}/>)}
+                        </div>
+                    </div>
                     <input type="text"
                            onChange={this.onChangeComment}
                            value={this.state.comment}/>
-                    <button onClick={this.onClickCreateComment}>Добавить комментарий</button>
+                    <button id="addComment" onClick={this.onClickCreateComment}>Добавить комментарий</button>
                 </form>
             </article>
         );
