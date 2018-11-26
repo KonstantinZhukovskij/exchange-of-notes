@@ -29,7 +29,7 @@ repository.getPaginationSummaries = (limit, offset) => {
         }],
         order: [
             ['id', 'DESC']
-        ],
+        ]
     }).then((summaries) => {
         return db.Summary.count().then((count) => {
             return {
@@ -38,6 +38,18 @@ repository.getPaginationSummaries = (limit, offset) => {
             }
         })
     });
+};
+
+repository.getPopularSummaries = () => {
+    return db.Summary.findAll({
+        limit: 5,
+        include: [{
+            model: db.User
+        }],
+        order: [
+            ['likes', 'DESC']
+        ]
+    })
 };
 
 repository.getSummaryById = (id) => {

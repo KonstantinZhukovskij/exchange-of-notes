@@ -10,13 +10,13 @@ export default class SideBar extends React.Component {
             <section className="leftBar">
                 <Popular/>
                 <div>
-                    {this.props.object.sort((a, b) => b.likes.length - a.likes.length).map((summary, i) =>
-                        <SideBarPost id={summary.id}
-                                     firstName={summary.User.firstName}
-                                     lastName={summary.User.lastName}
-                                     title={summary.title}
-                                     createdAt={summary.createdAt}
-                                     likes={summary.likes.length}
+                    {this.props.object.map((popularSummaries, i) =>
+                        <SideBarPost id={popularSummaries.id}
+                                     firstName={popularSummaries.User.firstName}
+                                     lastName={popularSummaries.User.lastName}
+                                     title={popularSummaries.title}
+                                     createdAt={popularSummaries.createdAt}
+                                     likes={popularSummaries.likes}
                                      key={i}
                         />)
                     }

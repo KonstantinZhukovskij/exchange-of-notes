@@ -81,17 +81,16 @@ app.post('/login', userController.postLogin);
 app.post('/registration', userController.postRegistration);
 app.get('/logout', userController.logout);
 app.post('/forgot', userController.postForgot);
-app.get('/summary', summaryController.getAllSummaries);
-app.get('/paginationSummary', summaryController.getPaginationSummaries);
-
-
+// app.get('/summary', summaryController.getAllSummaries);
+app.get('/summary', summaryController.getPaginationSummaries);
+app.get('/popularSummary', summaryController.getPopularSummaries);
 app.get('/summary/:id', summaryController.getSummaryById);
 app.put('/summary/:id', summaryController.updateSummary);
 app.get('/reset/:token', userController.getReset);
 app.post('/reset/:token', userController.postReset);
 app.put('/account/profile', passportConfig.isAuthenticated, userController.putUpdateAccount);
 app.put('/account/password', passportConfig.isAuthenticated, userController.putUpdatePassword);
-app.delete('/account', passportConfig.isAuthenticated, userController.deleteAccount);
+app.delete('/account/delete', passportConfig.isAuthenticated, userController.deleteAccount);
 app.post('/create', summaryController.postSummary);
 app.get('/authorSummary', summaryController.getAllAuthorSummaries);
 app.post('/comment', commentController.postComment);

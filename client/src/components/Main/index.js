@@ -2,14 +2,15 @@ import React from 'react';
 import MainPost from '../MainPost';
 import Pagination from '../Pagination';
 import SideBar from '../SideBar';
-import {getAllCommentsToSummary, getPaginationSummaries} from '../../services/axios'
+import {getAllCommentsToSummary, getPaginationSummaries, getPopularSummaries} from '../../services/axios'
 
 export default class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             summaries: [],
-            limit: 1,
+            popularSummaries: [],
+            limit: 2,
             offset: 0,
             count: 0
         }
@@ -32,6 +33,12 @@ export default class Main extends React.Component {
                         });
                         this.setState({summaries: summaries});
                     });
+                getPopularSummaries()
+                    .then((res) => {
+                        this.setState({
+                            popularSummaries: res.data
+                        })
+                    })
             });
     }
 
@@ -65,11 +72,10 @@ export default class Main extends React.Component {
         })
     };
 
-
     render() {
         return (
             <div id="main">
-                <SideBar object={this.state.summaries}/>
+                <SideBar object={this.state.popularSummaries}/>
                 <div className="rightBar">
                     {this.state.summaries.map((summary, index) =>
                         <MainPost id={summary.id}

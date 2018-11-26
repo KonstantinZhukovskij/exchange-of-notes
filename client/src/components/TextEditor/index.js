@@ -2,7 +2,6 @@ import React from 'react';
 import {Editor} from 'react-draft-wysiwyg';
 import {convertToRaw, EditorState} from 'draft-js';
 
-
 export default class TextEditor extends React.Component {
     constructor(props) {
         super(props);
@@ -23,6 +22,7 @@ export default class TextEditor extends React.Component {
             editorState: editorState,
             rawContent: JSON.stringify(rawContent)
         });
+        console.log(contentState.getPlainText())
     };
 
     render() {

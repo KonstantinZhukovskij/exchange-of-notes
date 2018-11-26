@@ -38,6 +38,16 @@ exports.getPaginationSummaries = (req, res) => {
         })
 };
 
+exports.getPopularSummaries = (req, res) => {
+    SummaryRepository.getPopularSummaries()
+        .then((popularSummaries) => {
+            res.json(popularSummaries)
+        })
+        .catch((error) => {
+            res.json(error)
+        })
+};
+
 exports.getSummaryById = (req, res) => {
     SummaryRepository.getSummaryById(req.params.id)
         .then((summary) => {
