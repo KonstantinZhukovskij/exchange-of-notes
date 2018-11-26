@@ -2,6 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router-dom'
 import CommentBox from '../CommentBox'
 import toastr from '../../services/toastr'
+import PreviewSummary from "../PreviewSummary";
 import {createComment, getAllCommentsToSummary, getSummaryById, putUpdateSummary} from "../../services/axios";
 
 class SinglePost extends React.Component {
@@ -36,7 +37,6 @@ class SinglePost extends React.Component {
                     likes: [...res.data.likes, ...this.state.likes]
                 });
             });
-
         getAllCommentsToSummary(this.props.match.params.id)
             .then((res) => {
                 this.setState({
@@ -122,6 +122,7 @@ class SinglePost extends React.Component {
         } else {
             author = "Аноним"
         }
+
         return (
             <article className="post summaries">
                 <header>
@@ -138,7 +139,9 @@ class SinglePost extends React.Component {
                     <img src="https://cs6.pikabu.ru/post_img/big/2017/09/05/7/1504605947158114655.jpg" alt=""/>
                 </a>
                 <ul className="actions">
-                    <p>{this.state.text}</p>
+                    <div id="previewSummary">
+                        <PreviewSummary text={this.state.text}/>
+                    </div>
                 </ul>
                 <footer>
                     <h3>Комментарии</h3>
@@ -153,14 +156,12 @@ class SinglePost extends React.Component {
                 <hr/>
                 <form>
                     <div id="commentsInput">
-                        <div>
-                            {this.state.comments.map((comment, i) =>
-                                <CommentBox id={comment.id}
-                                            comment={comment.text}
-                                            firstName={comment.User.firstName}
-                                            lastName={comment.User.lastName}
-                                            key={i}/>)}
-                        </div>
+                        {this.state.comments.map((comment, i) =>
+                            <CommentBox id={comment.id}
+                                        comment={comment.text}
+                                        firstName={comment.User.firstName}
+                                        lastName={comment.User.lastName}
+                                        key={i}/>)}
                     </div>
                     <input type="text"
                            onChange={this.onChangeComment}

@@ -15,7 +15,11 @@ module.exports = (db, DataTypes) => {
             allowNull: false,
         },
         text: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
+        rawText: {
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         authorId: {

@@ -7,6 +7,7 @@ exports.postSummary = (req, res) => {
             title: req.body.title,
             description: req.body.description,
             text: req.body.text,
+            rawText: req.body.rawText,
             authorId: req.user.id,
         }).then((data) => {
             return res.status(200).json(data)

@@ -64,7 +64,7 @@ export default class RegistrationPage extends React.Component {
                                onChange={this.onChangeConfirmPassword}
                                value={this.state.confirmPassword}
                                required/>
-                        <button onClick={this.onClickRegistration}>Регистрация</button>
+                        <button className="fas fa-user-plus" onClick={this.onClickRegistration}>Регистрация</button>
                     </div>
                     <div className="container signin">
                         <p id="questionRegister">У Вас уже есть учетная запись?</p>

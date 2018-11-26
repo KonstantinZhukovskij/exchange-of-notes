@@ -7,12 +7,17 @@ export default class TextEditor extends React.Component {
         super(props);
         this.state = {
             editorState: EditorState.createEmpty(),
-            rawContent: null
+            text: null,
+            rawText: null
         }
     }
 
-    getRawContent() {
-        return this.state.rawContent
+    getContent() {
+        return this.state.text
+    }
+
+    getRawText() {
+        return this.state.rawText
     }
 
     onEditorStateChange = (editorState) => {
@@ -20,9 +25,9 @@ export default class TextEditor extends React.Component {
         const rawContent = convertToRaw(contentState);
         this.setState({
             editorState: editorState,
-            rawContent: JSON.stringify(rawContent)
+            text: JSON.stringify(rawContent),
+            rawText: contentState.getPlainText()
         });
-        console.log(contentState.getPlainText())
     };
 
     render() {
@@ -30,8 +35,6 @@ export default class TextEditor extends React.Component {
             <div>
                 <Editor
                     editorState={this.state.editorState}
-                    wrapperClassName="demo-wrapper"
-                    editorClassName="demo-editor"
                     onEditorStateChange={this.onEditorStateChange}
                 />
             </div>

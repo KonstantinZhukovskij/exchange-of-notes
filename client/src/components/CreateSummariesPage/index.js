@@ -8,7 +8,8 @@ export default class CreateSummariesPage extends React.Component {
     state = {
         title: '',
         description: '',
-        text: ''
+        text: '',
+        rawText: ''
     };
 
     onChangeTitle = (event) => {
@@ -31,11 +32,12 @@ export default class CreateSummariesPage extends React.Component {
 
     onClickCreateSummary = (event) => {
         event.preventDefault();
-        const rawContent = this.refs.textEditorRef.getRawContent();
+        const rawContent = this.refs.textEditorRef.getContent();
         const dataToSend = {
             title: this.state.title,
             description: this.state.description,
-            text: rawContent
+            text: rawContent,
+            rawText: this.refs.textEditorRef.getRawText()
         };
         createSummary(dataToSend)
             .then((res) => {
@@ -43,6 +45,7 @@ export default class CreateSummariesPage extends React.Component {
                     title: '',
                     description: '',
                     text: '',
+                    rawText: ''
                 });
                 toastr.success(`Конспект ${res.data.title} успешно создан`, "Поздравляем!");
             })

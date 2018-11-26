@@ -63,7 +63,7 @@ export default class GuestHeader extends React.Component {
                         <li>
                             <Link to="/summary">Конспекты</ Link>
                         </li>
-                        <li><a href="https://gitter.im/Room-with-notes/Lobby#"
+                        <li><a href="https://gitter.im/Room-with-notes/Summary"
                                target="_blank"
                                rel="noopener noreferrer">Чат</a></li>
                     </ul>

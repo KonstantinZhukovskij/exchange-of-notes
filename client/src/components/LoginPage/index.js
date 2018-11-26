@@ -75,7 +75,9 @@ export default class LoginPage extends React.Component {
                                        onChange={this.onChangePassword}
                                        value={this.state.password}
                                        required/>
-                                <button id='loginbutton' onClick={this.onClickLogin}>Войти</button>
+                                <button className="fas fa-sign-in-alt" id='loginButton'
+                                        onClick={this.onClickLogin}>Войти
+                                </button>
                                 <a href="URL" className="btn" id="forgot">Забыли пароль?</a>
                             </div>
                         </div>

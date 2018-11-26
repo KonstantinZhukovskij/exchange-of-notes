@@ -11,12 +11,12 @@ export default class Pagination extends React.Component {
 
     onClickNextPage = (event) => {
         event.preventDefault();
-        this.props.onClickPaginationNext()
+        this.props.onClickPaginationNext();
     };
 
     onClickPreviousPage = (event) => {
         event.preventDefault();
-        this.props.onClickPaginationPrevious()
+        this.props.onClickPaginationPrevious();
     };
 
     render() {

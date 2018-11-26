@@ -2406,7 +2406,7 @@ body {
     text-align: right;
 }
 
-#loginbutton {
+#loginButton {
     display: block;
     margin-left: auto;
     margin-right: auto
@@ -2463,4 +2463,8 @@ body {
 #deleteUser {
     margin-top: -10px;
     margin-bottom: 1em;
+}
+
+#previewSummary > div .rdw-editor-toolbar {
+    display: none;
 }
