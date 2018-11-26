@@ -124,12 +124,12 @@ export default class UserPage extends React.Component {
                                    onChange={this.onChangeLocation}
                                    value={this.state.location}
                                    placeholder="Введите Ваш город"/>
-                            <button onClick={this.onClickUpdateAccount}>Применить</button>
+                            <button className="far fa-thumbs-up" onClick={this.onClickUpdateAccount}>Применить</button>
                         </div>
                     </form>
                     <hr/>
                     <div className="container registration">
-                        <form method="post">
+                        <form>
                             <h2>Изменить пароль</h2>
                             <label><b>Новый пароль</b></label>
                             <input type="password"
@@ -143,7 +143,7 @@ export default class UserPage extends React.Component {
                                    value={this.state.confirmPassword}
                                    placeholder="Повторите новый пароль"
                                    required/>
-                            <button onClick={this.onClickUpdatePassword}>Изменить</button>
+                            <button className="fas fa-key" onClick={this.onClickUpdatePassword}>Изменить</button>
                         </form>
                     </div>
                 </div>

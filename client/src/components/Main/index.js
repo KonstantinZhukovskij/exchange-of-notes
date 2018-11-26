@@ -23,10 +23,10 @@ export default class Main extends React.Component {
                 this.setState({
                     count: res.data.count
                 });
-                const promiseArray = summaries.map((summary, index) => {
+                const promiseSumariesArray = summaries.map((summary, index) => {
                     return getAllCommentsToSummary(summary.id)
                 });
-                Promise.all(promiseArray)
+                Promise.all(promiseSumariesArray)
                     .then((allComments) => {
                         summaries.forEach((item, index) => {
                             item.commentCount = allComments[index].data.length;

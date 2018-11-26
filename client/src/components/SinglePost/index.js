@@ -1,8 +1,8 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom'
 import CommentBox from '../CommentBox'
-import {createComment, getAllCommentsToSummary, getSummaryById, putUpdateSummary} from "../../services/axios";
 import toastr from '../../services/toastr'
+import {createComment, getAllCommentsToSummary, getSummaryById, putUpdateSummary} from "../../services/axios";
 
 class SinglePost extends React.Component {
     constructor(props) {
@@ -165,7 +165,9 @@ class SinglePost extends React.Component {
                     <input type="text"
                            onChange={this.onChangeComment}
                            value={this.state.comment}/>
-                    <button id="addComment" onClick={this.onClickCreateComment}>Добавить комментарий</button>
+                    <button id="addComment" className="far fa-comment" onClick={this.onClickCreateComment}>
+                        Добавить комментарий
+                    </button>
                 </form>
             </article>
         );

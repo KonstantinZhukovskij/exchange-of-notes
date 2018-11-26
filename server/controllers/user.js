@@ -90,12 +90,14 @@ exports.putUpdatePassword = (req, res) => {
         });
 };
 
-exports.deleteAccount = (req, res) => {
-    UserRepository.removeUserById(req.user.id)
+exports.deleteUserById = (req, res) => {
+    UserRepository.deleteUserById(req.body.id)
         .then(() => {
-            req.logout();
-            res.json({success: true});
-        });
+            return res.status(200).json({success: true});
+        })
+        .catch((error) => {
+            return res.status(500)
+        })
 };
 
 exports.getReset = (req, res) => {

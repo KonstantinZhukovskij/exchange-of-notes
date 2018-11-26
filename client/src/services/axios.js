@@ -13,7 +13,7 @@ export function createSummary(dataToSend) {
 }
 
 export function getAllSummaries() {
-    return axios.get('/summary');
+    return axios.get('/allSummaries');
 }
 
 export function getPaginationSummaries(limit, offset) {
@@ -35,12 +35,24 @@ export function getSummaryById(id) {
     return axios.get('/summary/' + id)
 }
 
+export function deleteSummaryById(id) {
+    return axios.delete('/summary', {data: {id: id}})
+}
+
+export function getAllUsers() {
+    return axios.get('/users')
+}
+
 export function putUpdateAccount(dataToSend) {
     return axios.put('/account/profile', dataToSend)
 }
 
 export function putUpdatePassword(dataToSend) {
     return axios.put('/account/password', dataToSend)
+}
+
+export function deleteUserById(userId) {
+    return axios.delete('/account/delete', {data: {id: userId}})
 }
 
 export function getAllCommentsToSummary(summaryId) {

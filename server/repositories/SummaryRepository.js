@@ -73,4 +73,11 @@ repository.updateSummary = (summaryId, data) => {
         });
 };
 
+repository.deleteSummary = (summaryId) => {
+    return db.Summary.destroy(
+        {
+            where: {id: summaryId}
+        });
+};
+
 module.exports = repository;

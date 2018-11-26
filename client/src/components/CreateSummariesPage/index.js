@@ -78,7 +78,7 @@ export default class CreateSummariesPage extends React.Component {
                     </div>
                     <p id="imageInput">Нажмите на стрелку или перетащите на неё картинку, для заголовка</p>
                     <ImageUploader/>
-                    <button onClick={this.onClickCreateSummary}>Загрузить</button>
+                    <button className="fas fa-folder-plus" onClick={this.onClickCreateSummary}>Загрузить</button>
                 </form>
             </div>
         );

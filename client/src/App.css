@@ -831,7 +831,7 @@ ul.icons li > * .label {
 }
 
 .leftBar .button {
-    margin-left: 80%;
+    margin-left: 68%;
     margin-top: 10px;
 }
 
@@ -2453,4 +2453,14 @@ body {
 
 #addComment {
     margin-top: 10px;
+}
+
+#deleteSummary {
+    margin-top: -10px;
+    margin-bottom: 1em;
+}
+
+#deleteUser {
+    margin-top: -10px;
+    margin-bottom: 1em;
 }

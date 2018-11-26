@@ -55,8 +55,12 @@ repository.findUserByResetPswToken = (token) => {
     });
 };
 
-repository.removeUserById = (userId) => {
-    return db.User.destroy({where: {id: userId}});
+repository.deleteUserById = (userId) => {
+    return db.User.destroy(
+        {
+            where: {id: userId}
+        }
+    );
 };
 
 repository.changeUserPassword = (userId, newPassword, newConfirmPassword) => {
@@ -116,8 +120,6 @@ repository.linkFacebookProfile = (userId, accessToken, refreshToken, profile) =>
 };
 
 repository.createAccFromFacebook = (accessToken, refreshToken, profile) => {
-    console.log("-----------createAcc");
-
     if (!profile._json) {
         throw 'Facebook profile is missing json property!';
     }

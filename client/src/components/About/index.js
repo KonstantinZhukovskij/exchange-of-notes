@@ -8,7 +8,7 @@ export default class About extends React.Component {
                 <p>Информация о нашем ресурсе</p>
                 <ul className="actions">
                     <li id="aboutButton">
-                        <Link to="/about" className="button">Узнать больше</Link>
+                        <Link to="/about" className="button fas fa-user-friends">Узнать больше</Link>
                     </li>
                 </ul>
             </section>

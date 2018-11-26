@@ -70,8 +70,18 @@ exports.getAllAuthorSummaries = (req, res) => {
 
 exports.updateSummary = (req, res) => {
     SummaryRepository.updateSummary(req.params.id, req.body)
-        .then((likes) => {
-            res.json(likes)
+        .then((summary) => {
+            res.json(summary)
+        })
+        .catch((error) => {
+            res.json(error)
+        })
+};
+
+exports.deleteSummary = (req, res) => {
+    SummaryRepository.deleteSummary(req.body.id)
+        .then((res) => {
+            res.json({success: true})
         })
         .catch((error) => {
             res.json(error)

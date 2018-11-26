@@ -28,7 +28,8 @@ export default class MainPost extends React.Component {
                 </Link>
                 <footer>
                     <ul className="actions">
-                        <Link to={"summary/" + this.props.id} className="button large">Прочитать</Link>
+                        <Link to={"summary/" + this.props.id} className="button large fas
+                              fa-book-open ">Прочитать</Link>
                     </ul>
                     <ul className="stats" id="ratings">
                         <li>Рейтинг</li>
