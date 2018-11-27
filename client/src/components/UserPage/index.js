@@ -1,9 +1,11 @@
 import React from 'react';
 import toastr from '../../services/toastr'
-import {putUpdateAccount, putUpdatePassword} from '../../services/axios'
+import {getUserById, putUpdateAccount, putUpdatePassword} from '../../services/axios'
 
 export default class UserPage extends React.Component {
     state = {
+        user: JSON.parse(localStorage.getItem("user")),
+        id: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -14,6 +16,22 @@ export default class UserPage extends React.Component {
         createdAt: '',
         updatedAt: ''
     };
+
+    componentWillMount() {
+        getUserById(this.state.user.id)
+            .then((res) => {
+                this.setState({
+                    id: res.data.id,
+                    email: res.data.email,
+                    firstName: res.data.firstName,
+                    lastName: res.data.lastName,
+                    gender: res.data.gender,
+                    location: res.data.location,
+                    createdAt: res.data.createdAt,
+                    updatedAt: res.data.updatedAt
+                })
+            })
+    }
 
     onChangePassword = (event) => {
         this.setState({
@@ -56,10 +74,10 @@ export default class UserPage extends React.Component {
         putUpdateAccount(this.state)
             .then((res) => {
                 this.setState({
-                    firstName: '',
-                    lastName: '',
-                    gender: '',
-                    location: '',
+                    firstName: res.data.firstName,
+                    lastName: res.data.lastName,
+                    gender: res.data.gender,
+                    location: res.data.location,
                 });
                 toastr.success("Ваши данные успешно изменены", "Поздравляем!");
             })
@@ -72,7 +90,7 @@ export default class UserPage extends React.Component {
         event.preventDefault();
         if (this.state.password && this.state.confirmPassword !== null) {
             putUpdatePassword(this.state)
-                .then((res) => {
+                .then(() => {
                     this.setState({
                         password: '',
                         confirmPassword: ''
@@ -88,7 +106,6 @@ export default class UserPage extends React.Component {
     };
 
     render() {
-        this.returnUser = JSON.parse(localStorage.getItem("user"));
         return (
             <div>
                 <div className="sign">
@@ -97,13 +114,13 @@ export default class UserPage extends React.Component {
                             <h1>Ваш аккаунт</h1>
                             <label><b>Эл. адрес</b></label>
                             <input type="text"
-                                   value={this.returnUser.email} disabled/>
+                                   value={this.state.email} disabled/>
                             <label><b>Дата создания аккаунта</b></label>
                             <input type="text"
-                                   value={this.returnUser.createdAt.slice(0, -14)} disabled/>
+                                   value={this.state.createdAt.slice(0, -14)} disabled/>
                             <label><b>Дата последнего изменения</b></label>
                             <input type="text"
-                                   value={this.returnUser.updatedAt.slice(0, -14)} disabled/>
+                                   value={this.state.updatedAt.slice(0, -14)} disabled/>
                             <label><b>Имя</b></label>
                             <input type="text"
                                    onChange={this.onChangeFirstName}
