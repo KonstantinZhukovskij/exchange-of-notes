@@ -5,35 +5,6 @@ import SideBar from '../SideBar';
 import {getAllCommentsToSummary, getPaginationSummaries, getPopularSummaries} from '../../services/axios'
 
 export default class Main extends React.Component {
-    changeOffsetUp = () => {
-        this.setState({
-            offset: this.state.offset + this.state.limit
-        }, () => {
-            if (this.state.offset + this.state.limit <= this.state.count) {
-                getPaginationSummaries(this.state.limit, this.state.offset)
-                    .then((res) => {
-                        this.setState({
-                            summaries: res.data.summaries
-                        })
-                    })
-            }
-        })
-    };
-    changeOffsetDown = () => {
-        this.setState({
-            offset: this.state.offset - this.state.limit
-        }, () => {
-            if (this.state.offset >= 0) {
-                getPaginationSummaries(this.state.limit, this.state.offset)
-                    .then((res) => {
-                        this.setState({
-                            summaries: res.data.summaries
-                        })
-                    })
-            }
-        })
-    };
-
     constructor(props) {
         super(props);
         this.state = {
@@ -70,6 +41,36 @@ export default class Main extends React.Component {
                     })
             });
     }
+
+    changeOffsetUp = () => {
+        this.setState({
+            offset: this.state.offset + this.state.limit
+        }, () => {
+            if (this.state.offset + this.state.limit <= this.state.count) {
+                getPaginationSummaries(this.state.limit, this.state.offset)
+                    .then((res) => {
+                        this.setState({
+                            summaries: res.data.summaries
+                        })
+                    })
+            }
+        })
+    };
+    
+    changeOffsetDown = () => {
+        this.setState({
+            offset: this.state.offset - this.state.limit
+        }, () => {
+            if (this.state.offset >= 0) {
+                getPaginationSummaries(this.state.limit, this.state.offset)
+                    .then((res) => {
+                        this.setState({
+                            summaries: res.data.summaries
+                        })
+                    })
+            }
+        })
+    };
 
     render() {
         return (

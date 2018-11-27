@@ -24,12 +24,6 @@ export default class CreateSummariesPage extends React.Component {
         })
     };
 
-    onChangeText = (event) => {
-        this.setState({
-            text: event.target.value
-        })
-    };
-
     onClickCreateSummary = (event) => {
         event.preventDefault();
         const rawContent = this.refs.textEditorRef.getContent();
@@ -48,6 +42,7 @@ export default class CreateSummariesPage extends React.Component {
                     rawText: ''
                 });
                 toastr.success(`Конспект ${res.data.title} успешно создан`, "Поздравляем!");
+                setTimeout(() => window.location = "/", 2000);
             })
             .catch((error) => {
                 toastr.warning('Проверьте все ли поля заполнены', 'Внимание!')
@@ -81,7 +76,9 @@ export default class CreateSummariesPage extends React.Component {
                     </div>
                     <p id="imageInput">Нажмите на стрелку или перетащите на неё картинку, для заголовка</p>
                     <ImageUploader/>
-                    <button className="fas fa-folder-plus" onClick={this.onClickCreateSummary}>Загрузить</button>
+                    <button id="downloadSummary" className="fas fa-upload"
+                            onClick={this.onClickCreateSummary}>Загрузить конспект
+                    </button>
                 </form>
             </div>
         );

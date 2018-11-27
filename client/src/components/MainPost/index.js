@@ -24,12 +24,15 @@ export default class MainPost extends React.Component {
                     </div>
                 </header>
                 <Link to={"summary/" + this.props.id} className="image featured">
-                    <img src="https://cs6.pikabu.ru/post_img/big/2017/09/05/7/1504605947158114655.jpg" alt=""/>
+
+                    <img id="imgMainPost"
+                         src=""
+                         alt="summary"/>
                 </Link>
                 <footer>
                     <ul className="actions">
-                        <Link to={"summary/" + this.props.id} className="button large fas
-                              fa-book-open ">Прочитать</Link>
+                        <Link to={"summary/" + this.props.id} id="readButton" className="button large fas
+                              fa-book-open">Прочитать</Link>
                     </ul>
                     <ul className="stats" id="ratings">
                         <li>Рейтинг</li>

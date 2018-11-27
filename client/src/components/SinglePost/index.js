@@ -1,7 +1,7 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom'
-import CommentBox from '../CommentBox'
-import toastr from '../../services/toastr'
+import {withRouter} from 'react-router-dom';
+import CommentBox from '../CommentBox';
+import toastr from '../../services/toastr';
 import PreviewSummary from "../PreviewSummary";
 import {createComment, getAllCommentsToSummary, getSummaryById, putUpdateSummary} from "../../services/axios";
 
@@ -117,8 +117,8 @@ class SinglePost extends React.Component {
     render() {
         const time = this.state.createdAt.substring(0, 10);
         let author;
-        if (this.props.lastName && this.props.firstName) {
-            author = this.props.lastName + ' ' + this.props.firstName;
+        if (this.state.lastName && this.state.firstName) {
+            author = this.state.lastName + ' ' + this.state.firstName;
         } else {
             author = "Аноним"
         }
@@ -135,9 +135,6 @@ class SinglePost extends React.Component {
                         <p className="author"><span className="name">Автор: {author}</span></p>
                     </div>
                 </header>
-                <a className="image featured">
-                    <img src="https://cs6.pikabu.ru/post_img/big/2017/09/05/7/1504605947158114655.jpg" alt=""/>
-                </a>
                 <ul className="actions">
                     <div id="previewSummary">
                         <PreviewSummary text={this.state.text}/>
