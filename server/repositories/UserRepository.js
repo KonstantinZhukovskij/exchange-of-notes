@@ -4,8 +4,8 @@ const PSW_RESET_TOKEN_VALID_FOR = 3;
 const ONE_HOUR = 3600000;
 let repository = {};
 
-repository.getUserById = (id) => {
-    return db.User.findById(id);
+repository.getUserById = (userId) => {
+    return db.User.findById(userId)
 };
 
 repository.getAllUsers = () => {
@@ -24,6 +24,45 @@ repository.createUser = (user) => {
         });
 };
 
+repository.updateUser = (userId, body) => {
+    return db.User.findById(userId)
+        .then((user) => {
+            user.set('firstName', body.firstName);
+            user.set('lastName', body.lastName);
+            user.set('gender', body.gender);
+            user.set('location', body.location);
+            return user.save();
+        });
+};
+
+repository.changePassword = (userId, newPassword, newConfirmPassword) => {
+    return db.User.findById(userId)
+        .then((user) => {
+            if (!user || newPassword !== newConfirmPassword) {
+                return user.status(500);
+            } else {
+                user.password = newPassword;
+                return user.save();
+            }
+        });
+};
+
+repository.deleteUser = (userId) => {
+    return db.User.destroy(
+        {
+            where: {id: userId}
+        }
+    );
+};
+
+repository.createAdmin = (body) => {
+    return db.User.findById(body.user.id)
+        .then((user) => {
+            user.set('isAdmin', body.user.isAdmin);
+            return user.save();
+        });
+};
+
 repository.assignResetPswToken = (email, token) => {
     return db.User.findOne({where: {email: email}})
         .then((user) => {
@@ -31,17 +70,6 @@ repository.assignResetPswToken = (email, token) => {
                 throw 'Account with such email does not exist';
             user.resetPasswordToken = token;
             user.resetPasswordExpires = Date.now() + PSW_RESET_TOKEN_VALID_FOR * ONE_HOUR;
-            return user.save();
-        });
-};
-
-repository.putUpdateUser = (userId, body) => {
-    return db.User.findById(userId)
-        .then((user) => {
-            user.set('firstName', body.firstName);
-            user.set('lastName', body.lastName);
-            user.set('gender', body.gender);
-            user.set('location', body.location);
             return user.save();
         });
 };
@@ -55,25 +83,6 @@ repository.findUserByResetPswToken = (token) => {
     });
 };
 
-repository.deleteUserById = (userId) => {
-    return db.User.destroy(
-        {
-            where: {id: userId}
-        }
-    );
-};
-
-repository.changeUserPassword = (userId, newPassword, newConfirmPassword) => {
-    return db.User.findById(userId)
-        .then((user) => {
-            if (!user || newPassword !== newConfirmPassword) {
-                return user.status(500);
-            } else {
-                user.password = newPassword;
-                return user.save();
-            }
-        });
-};
 
 repository.changeUserPswAndResetToken = (token, newPassword) => {
     if (!token || token.length < 1)

@@ -5,7 +5,7 @@ const emailService = require('../services/emailService.js');
 const SummaryRepository = require('../repositories/SummaryRepository');
 const UserRepository = require('../repositories/UserRepository.js');
 
-exports.postLogin = (req, res, next) => {
+exports.login = (req, res, next) => {
     const errors = req.validationErrors();
     if (errors) {
         res.json(errors)
@@ -29,7 +29,7 @@ exports.logout = (req, res) => {
 
 };
 
-exports.postRegistration = (req, res) => {
+exports.registration = (req, res) => {
     req.assert('email', 'Email is not valid').isEmail();
     req.assert('password', 'Password must contain at least 4 characters').len(4);
     req.assert('confirmPassword', 'Entered passwords do not match').equals(req.body.password);
@@ -60,8 +60,18 @@ exports.getAllUsers = (req, res) => {
         })
 };
 
-exports.putUpdateUser = (req, res) => {
-    UserRepository.putUpdateUser()
+exports.getUserById = (req, res) => {
+    UserRepository.getUserById(req.query.id)
+        .then((user) => {
+            res.status(200).json(user)
+        })
+        .catch((error) => {
+            res.status(500).json(error)
+        })
+};
+
+exports.updateUser = (req, res) => {
+    UserRepository.updateUser(req.body.id, req.body)
         .then((user) => {
             res.json(user)
         })
@@ -70,18 +80,8 @@ exports.putUpdateUser = (req, res) => {
         });
 };
 
-exports.putUpdateAccount = (req, res) => {
-    UserRepository.putUpdateAccount(req.user.id, req.body)
-        .then(() => {
-            res.json(req.body)
-        })
-        .catch((error) => {
-            res.json(error)
-        });
-};
-
-exports.putUpdatePassword = (req, res) => {
-    UserRepository.changeUserPassword(req.user.id, req.body.password, req.body.confirmPassword)
+exports.changePassword = (req, res) => {
+    UserRepository.changePassword(req.user.id, req.body.password, req.body.confirmPassword)
         .then((req) => {
             res.status(200).json(req)
         })
@@ -90,14 +90,24 @@ exports.putUpdatePassword = (req, res) => {
         });
 };
 
-exports.deleteUserById = (req, res) => {
-    UserRepository.deleteUserById(req.body.id)
+exports.deleteUser = (req, res) => {
+    UserRepository.deleteUser(req.body.id)
         .then(() => {
             return res.status(200).json({success: true});
         })
         .catch((error) => {
             return res.status(500)
         })
+};
+
+exports.createAdmin = (req, res) => {
+    UserRepository.createAdmin(req.body)
+        .then((user) => {
+            return res.status(200).json(user)
+        })
+        .catch((error) => {
+            return res.status(500).json(error)
+        });
 };
 
 exports.getReset = (req, res) => {
@@ -149,7 +159,7 @@ exports.postReset = (req, res, next) => {
     });
 };
 
-exports.postForgot = (req, res, next) => {
+exports.forgot = (req, res, next) => {
     req.assert('email', 'Please enter a valid email address').isEmail();
     const errors = req.validationErrors();
     if (errors) {

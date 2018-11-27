@@ -43,6 +43,10 @@ export function getAllUsers() {
     return axios.get('/users')
 }
 
+export function getUserById(userId) {
+    return axios.get('/user', userId)
+}
+
 export function putUpdateAccount(dataToSend) {
     return axios.put('/account/profile', dataToSend)
 }
@@ -51,8 +55,12 @@ export function putUpdatePassword(dataToSend) {
     return axios.put('/account/password', dataToSend)
 }
 
-export function deleteUserById(userId) {
+export function deleteUser(userId) {
     return axios.delete('/account/delete', {data: {id: userId}})
+}
+
+export function createAdmin(dataToSend) {
+    return axios.put('/admin', dataToSend)
 }
 
 export function getAllCommentsToSummary(summaryId) {

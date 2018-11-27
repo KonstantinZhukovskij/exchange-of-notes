@@ -1,26 +1,35 @@
 import React from 'react';
-import {getAllUsers, getPaginationSummaries} from '../../services/axios';
+import {getAllUsers, getPaginationSummaries, getUserById} from '../../services/axios';
 import UsersTable from '../UsersTable';
 import SummariesTable from '../SummariesTable';
 
 export default class AdminPage extends React.Component {
     state = {
         users: [],
-        summaries: []
+        summaries: [],
+        user: localStorage.getItem('user')
     };
 
     componentWillMount() {
-        getAllUsers()
-            .then((res) => {
-                this.setState({
-                    users: res.data
-                });
-            });
-        getPaginationSummaries()
-            .then((res) => {
-                this.setState({
-                    summaries: res.data.summaries
-                })
+        console.log(this.state.user.id);
+        getUserById()
+            .then(() => {
+                getAllUsers()
+                    .then((res) => {
+                        this.setState({
+                            users: res.data
+                        });
+                    });
+                getPaginationSummaries()
+                    .then((res) => {
+                        this.setState({
+                            summaries: res.data.summaries
+                        })
+                    })
+            })
+            .catch(() => {
+                console.log("REDIRECT")
+                //redirect
             })
     }
 
@@ -54,6 +63,11 @@ export default class AdminPage extends React.Component {
                             {this.state.users.map((user, index) =>
                                 <UsersTable id={user.id}
                                             email={user.email}
+                                            firstName={user.firstName}
+                                            lastName={user.lastName}
+                                            gender={user.gender}
+                                            location={user.location}
+                                            isAdmin={user.isAdmin}
                                             key={index}
                                             updateUsers={this.updateUsers}
                                 />

@@ -4,7 +4,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
 const secrets = require('./secrets');
 const db = require('../models/sequelize');
-const UserRepository = require('../repositories/UserRepository');
+const userController = require('../controllers/user');
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -76,11 +76,19 @@ exports.isAuthenticated = (req, res, next) => {
     res.redirect('/login');
 };
 
-exports.isAuthorized = function (req, res, next) {
+exports.isAuthorized = (req, res, next) => {
     const provider = req.path.split('/').slice(-1)[0];
     if (req.user.tokens[provider]) {
         next();
     } else {
         res.redirect('/auth/' + provider);
     }
+};
+
+exports.isAdmin = (req, res, next) => {
+    userController.getUserById(req.body.id);
+    if (res.user.isAdmin === true) {
+        return next()
+    } else
+        res.redirect('http://localhost:3000/notFound')
 };

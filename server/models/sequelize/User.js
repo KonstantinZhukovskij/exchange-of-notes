@@ -57,13 +57,9 @@ module.exports = (db, DataTypes) => {
         location: {
             type: DataTypes.STRING
         },
-        role: {
-            type: DataTypes.STRING,
-            defaultValue: 'User'
-        },
-        rating: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
+        isAdmin: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         },
         vkId: {
             type: DataTypes.STRING,
@@ -92,13 +88,9 @@ module.exports = (db, DataTypes) => {
         updatedAt: {
             type: DataTypes.DATE
         },
-        logins: {
-            type: DataTypes.INTEGER
-        },
         tokens: {
             type: DataTypes.JSON
         }
-
     }, {
         tableName: 'Users',
         instanceMethods: instanceMethods,

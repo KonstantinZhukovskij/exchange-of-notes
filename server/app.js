@@ -77,11 +77,12 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, 'public'), {maxAge: 2592000000}));
 
 app.get('/', homeController.index);
-app.post('/login', userController.postLogin);
-app.post('/registration', userController.postRegistration);
+app.post('/registration', userController.registration);
+app.post('/login', userController.login);
 app.get('/logout', userController.logout);
-app.post('/forgot', userController.postForgot);
+app.post('/forgot', userController.forgot);
 // app.get('/allSummaries', summaryController.getAllSummaries);
+app.post('/create', summaryController.postSummary);
 app.get('/summary', summaryController.getPaginationSummaries);
 app.get('/popularSummary', summaryController.getPopularSummaries);
 app.get('/summary/:id', summaryController.getSummaryById);
@@ -90,16 +91,16 @@ app.delete('/summary', summaryController.deleteSummary);
 app.get('/reset/:token', userController.getReset);
 app.post('/reset/:token', userController.postReset);
 app.get('/users', userController.getAllUsers);
-app.put('/account/profile', passportConfig.isAuthenticated, userController.putUpdateAccount);
-app.put('/account/password', passportConfig.isAuthenticated, userController.putUpdatePassword);
-app.delete('/account/delete', userController.deleteUserById);
-app.post('/create', summaryController.postSummary);
+app.get('/user', userController.getUserById);
+app.put('/account/profile', passportConfig.isAuthenticated, userController.updateUser);
+app.put('/account/password', passportConfig.isAuthenticated, userController.changePassword);
+app.delete('/account/delete', userController.deleteUser);
+app.put('/admin', userController.createAdmin);
 app.get('/authorSummary', summaryController.getAllAuthorSummaries);
 app.post('/comment', commentController.postComment);
 app.get('/comment/:id', commentController.getAllCommentsToSummary);
 app.post('/question', questionController.createQuestion);
 app.get('/question', questionController.getAllQuestions);
-
 
 safeRedirectToReturnTo = (req, res) => {
     res.redirect('http://localhost:3000');

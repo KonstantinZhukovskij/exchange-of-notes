@@ -1,3 +1,3 @@
 exports.index = (req, res) => {
-  res.json
+    res.json(res)
 };
