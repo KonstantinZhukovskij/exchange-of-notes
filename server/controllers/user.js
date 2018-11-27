@@ -61,7 +61,7 @@ exports.getAllUsers = (req, res) => {
 };
 
 exports.getUserById = (req, res) => {
-    UserRepository.getUserById(req.query.id)
+    UserRepository.getUserById(req.user.id)
         .then((user) => {
             res.status(200).json(user)
         })

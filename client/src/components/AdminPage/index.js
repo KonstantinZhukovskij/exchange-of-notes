@@ -5,31 +5,30 @@ import SummariesTable from '../SummariesTable';
 
 export default class AdminPage extends React.Component {
     state = {
-        users: [],
         summaries: [],
-        user: localStorage.getItem('user')
+        users: [],
+        user: JSON.parse(localStorage.getItem("user"))
     };
 
     componentWillMount() {
-        console.log(this.state.user.id);
-        getUserById()
-            .then(() => {
-                getAllUsers()
-                    .then((res) => {
-                        this.setState({
-                            users: res.data
+        getUserById(this.state.user.id)
+            .then((res) => {
+                if (res.data.isAdmin === true) {
+                    getAllUsers()
+                        .then((res) => {
+                            this.setState({
+                                users: res.data
+                            });
                         });
-                    });
-                getPaginationSummaries()
-                    .then((res) => {
-                        this.setState({
-                            summaries: res.data.summaries
+                    getPaginationSummaries()
+                        .then((res) => {
+                            this.setState({
+                                summaries: res.data.summaries
+                            })
                         })
-                    })
-            })
-            .catch(() => {
-                console.log("REDIRECT")
-                //redirect
+                } else {
+                    window.location.href = "http://localhost:3000";
+                }
             })
     }
 
