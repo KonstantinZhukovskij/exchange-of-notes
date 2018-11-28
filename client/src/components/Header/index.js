@@ -1,13 +1,14 @@
 import React from 'react';
 import $ from 'jquery';
 import {Link} from 'react-router-dom';
-import {getLogout} from '../../services/axios';
+import {getLogout, sendSearchQuery} from '../../services/axios';
 
 export default class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isUser: false,
+            searchQuery: 'Протеасома'
         };
     }
 
@@ -24,10 +25,29 @@ export default class Header extends React.Component {
         }
     }
 
-    handleSearchClick(event) {
+    onChangeSearchQuery = (event) => {
+        this.setState({
+            searchQuery: event.target.value
+        });
+        console.log(this.state.searchQuery)
+    };
+
+    onClickSearchQuery = (event) => {
+        event.preventDefault();
+        sendSearchQuery(this.state.searchQuery)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    };
+
+    handleSearchClick = (event) => {
         event.preventDefault();
         let $search = $('#search');
         let $search_input = $search.find('input');
+
         if (!$search.hasClass('visible')) {
             $search[0].reset();
             $search.addClass('visible');
@@ -42,7 +62,8 @@ export default class Header extends React.Component {
                 $search.removeClass('visible');
             }, 100);
         });
-    }
+    };
+
 
     onClickLogout = (event) => {
         event.preventDefault();
@@ -74,13 +95,15 @@ export default class Header extends React.Component {
                 <nav className="main">
                     <ul>
                         <li className="search">
-                            <a href="/" className="fa-search"
-                               onClick={this.handleSearchClick}
-                               title="Поиск">Search</a>
+                            <a className="fa-search"
+                                // onClick={this.handleSearchClick}
+                               onClick={this.onClickSearchQuery}
+                               title="Поиск">Поиск</a>
                             <form id="search">
                                 <input type="text"
+                                       onChange={this.onChangeSearchQuery}
                                        name="query"
-                                       placeholder="Search"/>
+                                       placeholder="Поиск"/>
                             </form>
                         </li>
                         <li className="menu">

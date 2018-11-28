@@ -79,6 +79,10 @@ export function getLogout() {
     return axios.put('/logout')
 }
 
+export function sendSearchQuery(dataToSend) {
+    return axios.get('/search?rawText=' + dataToSend, dataToSend)
+}
+
 export function facebookLogin() {
     return axios.get('/auth/facebook')
 }
