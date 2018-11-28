@@ -9,7 +9,8 @@ export default class CreateSummariesPage extends React.Component {
         title: '',
         description: '',
         text: '',
-        rawText: ''
+        rawText: '',
+        imageSrc: ''
     };
 
     onChangeTitle = (event) => {
@@ -31,7 +32,8 @@ export default class CreateSummariesPage extends React.Component {
             title: this.state.title,
             description: this.state.description,
             text: rawContent,
-            rawText: this.refs.textEditorRef.getRawText()
+            rawText: this.refs.textEditorRef.getRawText(),
+            imageSrc: this.state.imageSrc
         };
         createSummary(dataToSend)
             .then((res) => {
@@ -42,11 +44,17 @@ export default class CreateSummariesPage extends React.Component {
                     rawText: ''
                 });
                 toastr.success(`Конспект ${res.data.title} успешно создан`, "Поздравляем!");
-                setTimeout(() => window.location = "/", 2000);
+                setTimeout(() => window.location = "/", 1000);
             })
             .catch((error) => {
                 toastr.warning('Проверьте все ли поля заполнены', 'Внимание!')
             });
+    };
+
+    setImageSrcToState = (imageSrc) => {
+        this.setState({
+            imageSrc: imageSrc
+        })
     };
 
     render() {
@@ -75,7 +83,7 @@ export default class CreateSummariesPage extends React.Component {
                         </div>
                     </div>
                     <p id="imageInput">Нажмите на стрелку или перетащите на неё картинку, для заголовка</p>
-                    <ImageUploader/>
+                    <ImageUploader setImageSrcToState={this.setImageSrcToState}/>
                     <button id="downloadSummary" className="fas fa-upload"
                             onClick={this.onClickCreateSummary}>Создать конспект
                     </button>

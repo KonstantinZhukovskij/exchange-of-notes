@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.css';
+import {uploadImage} from '../../services/axios';
 
 
 export default class ImageUploader extends React.Component {
@@ -85,6 +86,12 @@ export default class ImageUploader extends React.Component {
 
     handleUploadImage = (event) => {
         event.preventDefault();
+        uploadImage(this.state.file)
+            .then((response) => {
+                const imageSrc = response.data.image.url;
+                this.props.setImageSrcToState(imageSrc);
+            }).catch((error) => {
+        });
     };
 
     handleCancelUpload = (event) => {

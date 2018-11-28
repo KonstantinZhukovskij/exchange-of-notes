@@ -1,3 +1,4 @@
+const sequelize = require('sequelize');
 const db = require('../models/sequelize');
 
 let repository = {};
@@ -47,7 +48,7 @@ repository.getPopularSummaries = () => {
             model: db.User
         }],
         order: [
-            ['likes', 'DESC']
+            [sequelize.fn('array_length', sequelize.col('likes'), 1), 'DESC']
         ]
     })
 };

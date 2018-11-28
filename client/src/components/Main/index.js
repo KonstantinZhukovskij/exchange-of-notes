@@ -52,10 +52,13 @@ export default class Main extends React.Component {
             });
     }
 
-    changeOffsetUp = () => {
-        if (this.state.offset + this.state.limit > this.state.count) {
+    componentDidUpdate() {
+        window.scrollTo(0, 0)
+    }
 
-        } else {
+    changeOffsetUp = () => {
+        const isNextPageButtonEnabled = this.state.offset + this.state.limit > this.state.count;
+        if (!isNextPageButtonEnabled) {
             this.setState({
                 offset: this.state.offset + this.state.limit
             }, () => {

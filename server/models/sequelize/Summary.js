@@ -29,6 +29,10 @@ module.exports = (db, DataTypes) => {
         likes: {
             type: DataTypes.ARRAY(DataTypes.INTEGER),
             defaultValue: []
+        },
+        imageSrc: {
+            type: DataTypes.TEXT,
+            defaultValue: 'https://i.ibb.co/XXZ9dY7/600px-No-image-available-svg.png'
         }
     }, {
         tableName: 'Summaries',

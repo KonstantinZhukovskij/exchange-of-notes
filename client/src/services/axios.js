@@ -83,6 +83,21 @@ export function sendSearchQuery(dataToSend) {
     return axios.get('/search?rawText=' + dataToSend, dataToSend)
 }
 
+export function uploadImage(file) {
+    const formData = new FormData();
+    formData.set('action', 'upload');
+    formData.set('type', 'file');
+    formData.set('auth_token', '8621e9d2ad0bdcc7db1b20c3586a5be5dfbe6068');
+    formData.append('source', file);
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    };
+
+    return axios.post('https://imgbb.com/json', formData, config);
+}
+
 export function facebookLogin() {
     return axios.get('/auth/facebook')
 }

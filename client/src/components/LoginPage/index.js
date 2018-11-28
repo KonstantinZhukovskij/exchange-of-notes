@@ -38,7 +38,7 @@ export default class LoginPage extends React.Component {
                 const serializedUser = JSON.stringify(res.data);
                 localStorage.setItem('user', serializedUser);
                 toastr.success(`Вы успешно вошли как ${res.data.email}`, "Поздравляем!");
-                setTimeout(() => window.location = "/", 2000);
+                setTimeout(() => window.location = "/", 1000);
             }).catch((error) => {
             toastr.error('Вы ввели не верные данные, или заполнили не все поля', 'Ошибка!')
         })

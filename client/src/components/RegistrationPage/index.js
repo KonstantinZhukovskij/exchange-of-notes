@@ -33,7 +33,7 @@ export default class RegistrationPage extends React.Component {
         registration(this.state)
             .then((res) => {
                 toastr.success(`Вы успешно зарегистрированы ${res.data.email}`, "Поздравляем!");
-                setTimeout(() => window.location = "/login", 2000);
+                setTimeout(() => window.location = "/login", 1000);
             })
             .catch((error) => {
                 toastr.error('Вы ввели не верные данные, или заполнили не все поля', 'Ошибка!')
