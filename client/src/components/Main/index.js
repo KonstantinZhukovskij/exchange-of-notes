@@ -10,23 +10,33 @@ export default class Main extends React.Component {
         this.state = {
             summaries: [],
             popularSummaries: [],
-            limit: 3,
+            limit: 2,
             offset: 0,
             count: 0
         }
     };
 
-    componentWillMount() {
+    static getDerivedStateFromProps(props, state) {
+        if (props.location.state) {
+            const summaries = [...props.location.state.summaries];
+            props.location.state = null;
+            return {...state, summaries: summaries}
+        } else {
+            return null
+        }
+    }
+
+    componentDidMount() {
         getPaginationSummaries(this.state.limit, this.state.offset)
             .then((res) => {
                 const summaries = res.data.summaries;
                 this.setState({
                     count: res.data.count
                 });
-                const promiseSumariesArray = summaries.map((summary, index) => {
+                const promiseSummariesArray = summaries.map((summary, index) => {
                     return getAllCommentsToSummary(summary.id)
                 });
-                Promise.all(promiseSumariesArray)
+                Promise.all(promiseSummariesArray)
                     .then((allComments) => {
                         summaries.forEach((item, index) => {
                             item.commentCount = allComments[index].data.length;
@@ -43,18 +53,22 @@ export default class Main extends React.Component {
     }
 
     changeOffsetUp = () => {
-        this.setState({
-            offset: this.state.offset + this.state.limit
-        }, () => {
-            if (this.state.offset + this.state.limit <= this.state.count) {
-                getPaginationSummaries(this.state.limit, this.state.offset)
-                    .then((res) => {
-                        this.setState({
-                            summaries: res.data.summaries
+        if (this.state.offset + this.state.limit > this.state.count) {
+
+        } else {
+            this.setState({
+                offset: this.state.offset + this.state.limit
+            }, () => {
+                if (this.state.offset <= this.state.count) {
+                    getPaginationSummaries(this.state.limit, this.state.offset)
+                        .then((res) => {
+                            this.setState({
+                                summaries: res.data.summaries
+                            })
                         })
-                    })
-            }
-        })
+                }
+            })
+        }
     };
 
     changeOffsetDown = () => {
@@ -77,19 +91,21 @@ export default class Main extends React.Component {
             <div id="main">
                 <SideBar object={this.state.popularSummaries}/>
                 <div className="rightBar">
-                    {this.state.summaries.map((summary, index) =>
-                        <MainPost id={summary.id}
-                                  firstName={summary.User.firstName}
-                                  lastName={summary.User.lastName}
-                                  title={summary.title}
-                                  description={summary.description}
-                                  text={summary.text}
-                                  createdAt={summary.createdAt}
-                                  commentCount={summary.commentCount}
-                                  likes={summary.likes.length}
-                                  key={index}/>
-                    )}
+                    {this.state.summaries.map((summary, index) => {
+                        const user = summary.User;
+                        return <MainPost id={summary.id}
+                                         firstName={user ? user.firstName : ''}
+                                         lastName={user ? user.lastName : ''}
+                                         title={summary.title}
+                                         description={summary.description}
+                                         text={summary.text}
+                                         createdAt={summary.createdAt}
+                                         commentCount={summary.commentCount}
+                                         likes={summary.likes.length}
+                                         key={index}/>
+                    })}
                     <Pagination limit={this.state.limit}
+                                count={this.state.limit}
                                 offset={this.state.offset}
                                 onClickPaginationPrevious={this.changeOffsetDown}
                                 onClickPaginationNext={this.changeOffsetUp}
