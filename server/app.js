@@ -21,6 +21,7 @@ const passportConfig = require('./config/passport');
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const summaryController = require('./controllers/summary');
+const searchController = require('./controllers/search');
 const commentController = require('./controllers/comment');
 const questionController = require('./controllers/question');
 
@@ -101,6 +102,8 @@ app.post('/comment', commentController.postComment);
 app.get('/comment/:id', commentController.getAllCommentsToSummary);
 app.post('/question', questionController.createQuestion);
 app.get('/question', questionController.getAllQuestions);
+
+app.get('/search', searchController.getFoundText);
 
 safeRedirectToReturnTo = (req, res) => {
     res.redirect('http://localhost:3000');

@@ -10,7 +10,7 @@ export default class Main extends React.Component {
         this.state = {
             summaries: [],
             popularSummaries: [],
-            limit: 2,
+            limit: 3,
             offset: 0,
             count: 0
         }
@@ -56,7 +56,7 @@ export default class Main extends React.Component {
             }
         })
     };
-    
+
     changeOffsetDown = () => {
         this.setState({
             offset: this.state.offset - this.state.limit

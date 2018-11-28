@@ -28,7 +28,7 @@ repository.getPaginationSummaries = (limit, offset) => {
             model: db.User
         }],
         order: [
-            ['id', 'DESC']
+            ['createdAt', 'DESC']
         ]
     }).then((summaries) => {
         return db.Summary.count().then((count) => {
