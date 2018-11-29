@@ -43,10 +43,10 @@ exports.registration = (req, res) => {
         tokens: {}
     })
         .then((user) => {
-            res.json(user)
+            res.status(200).json(user)
         })
         .catch((error) => {
-            res.json(error)
+            res.status(500).json(error)
         });
 };
 
