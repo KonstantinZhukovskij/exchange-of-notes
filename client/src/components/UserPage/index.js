@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import toastr from '../../services/toastr'
 import UserSummaries from "../UserSummaries";
 import {getAllAuthorSummaries, getUserById, putUpdateAccount, putUpdatePassword} from '../../services/axios'
@@ -129,6 +130,11 @@ export default class UserPage extends React.Component {
                     <form>
                         <div className="container registration">
                             <h1>Ваш аккаунт</h1>
+                            <div id="adminRoom">
+                                {this.state.user.isAdmin && <Link to={'/admin'} id="adminLink">
+                                    <button className="fas fa-crown">Кабинет администратора</button>
+                                </Link>}
+                            </div>
                             <label><b>Эл. адрес</b></label>
                             <input type="text"
                                    value={this.state.email} disabled/>

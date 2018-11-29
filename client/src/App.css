@@ -54,6 +54,10 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     border-bottom: 0;
 }
 
+h1 {
+    font-size: 1.7em;
+}
+
 h2 {
     font-size: 1.1em;
 }
@@ -2491,4 +2495,21 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+#adminLink {
+    border-bottom: none;
+}
+
+#createAdmin {
+    margin-left: 10px;
+}
+
+#adminRoom {
+    background-color: white;
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    margin-top: 25px;
+    margin-right: 14px;
 }

@@ -8,13 +8,23 @@ export default class UsersTable extends React.Component {
         user: this.props
     };
 
+    returnUser = JSON.parse(localStorage.getItem("user"));
+
     onClickDeleteUser = (event) => {
         event.preventDefault();
-        deleteUser(this.state.user.id)
-            .then(() => {
-                this.state.user.updateUsers();
-                toastr.success("Пользователь успешно удалён");
-            })
+        if (this.state.user.id !== 1) {
+            if (this.state.user.id !== this.returnUser.id) {
+                deleteUser(this.state.user.id)
+                    .then(() => {
+                        this.state.user.updateUsers();
+                        toastr.success("Пользователь успешно удалён");
+                    })
+            } else {
+                toastr.error("Вы не можете удалить свой аккаунт", "Ошибка!");
+            }
+        } else {
+            toastr.error("Главного администратора удалить нельзя", "Ошибка!");
+        }
     };
 
     onClickCreateAdmin = (event) => {

@@ -63,7 +63,7 @@ class Header extends React.Component {
     renderButtonIfUserIsLogged = () => {
         return (
             [<li className="menu" key={'houseLink'}>
-                <Link className="fa-home" to="/account/profile" title="Домашняя">Домашняя</Link>
+                <Link className="fa-home" to="/account/profile" title="Личный кабинет">Личный кабинет</Link>
             </li>, <li className="menu" key={'logoutLink'}>
                 <Link className="fa-sign-out menu" to="/logout" onClick={this.onClickLogout}
                       title="Выйти">Выйти</Link>
