@@ -10,7 +10,7 @@ export default class Main extends React.Component {
         this.state = {
             summaries: [],
             popularSummaries: [],
-            limit: 2,
+            limit: 3,
             offset: 0,
             count: 0
         }
@@ -92,7 +92,8 @@ export default class Main extends React.Component {
     render() {
         return (
             <div id="main">
-                <SideBar object={this.state.popularSummaries}/>
+                <SideBar object={this.state.popularSummaries}
+                />
                 <div className="rightBar">
                     {this.state.summaries.map((summary, index) => {
                         const user = summary.User;
@@ -105,6 +106,7 @@ export default class Main extends React.Component {
                                          createdAt={summary.createdAt}
                                          commentCount={summary.commentCount}
                                          likes={summary.likes.length}
+                                         imageSrc={summary.imageSrc}
                                          key={index}/>
                     })}
                     <Pagination limit={this.state.limit}

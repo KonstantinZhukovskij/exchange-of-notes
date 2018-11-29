@@ -86,6 +86,7 @@ app.post('/forgot', userController.forgot);
 app.post('/create', summaryController.postSummary);
 app.get('/summary', summaryController.getPaginationSummaries);
 app.get('/popularSummary', summaryController.getPopularSummaries);
+app.get('/authorSummary', summaryController.getAllAuthorSummaries);
 app.get('/summary/:id', summaryController.getSummaryById);
 app.put('/summary/:id', summaryController.updateSummary);
 app.delete('/summary', summaryController.deleteSummary);
@@ -97,7 +98,6 @@ app.put('/account/profile', passportConfig.isAuthenticated, userController.updat
 app.put('/account/password', passportConfig.isAuthenticated, userController.changePassword);
 app.delete('/account/delete', userController.deleteUser);
 app.put('/admin', userController.createAdmin);
-app.get('/authorSummary', summaryController.getAllAuthorSummaries);
 app.post('/comment', commentController.postComment);
 app.get('/comment/:id', commentController.getAllCommentsToSummary);
 app.post('/question', questionController.createQuestion);

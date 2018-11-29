@@ -17,6 +17,7 @@ export default class SideBar extends React.Component {
                                      title={popularSummaries.title}
                                      createdAt={popularSummaries.createdAt}
                                      likes={popularSummaries.likes}
+                                     imageSrc={popularSummaries.imageSrc}
                                      key={i}
                         />)
                     }

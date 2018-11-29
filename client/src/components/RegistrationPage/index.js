@@ -32,7 +32,7 @@ export default class RegistrationPage extends React.Component {
         event.preventDefault();
         registration(this.state)
             .then((res) => {
-                toastr.success(`Вы успешно зарегистрированы ${res.data.email}`, "Поздравляем!");
+                toastr.success(`Вы успешно зарегистрированы ${res.data.email}`, "Успех!");
                 setTimeout(() => window.location = "/login", 1000);
             })
             .catch((error) => {

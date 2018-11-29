@@ -1,6 +1,7 @@
 import React from 'react';
 import toastr from '../../services/toastr'
-import {getUserById, putUpdateAccount, putUpdatePassword} from '../../services/axios'
+import UserSummaries from "../UserSummaries";
+import {getAllAuthorSummaries, getUserById, putUpdateAccount, putUpdatePassword} from '../../services/axios'
 
 export default class UserPage extends React.Component {
     state = {
@@ -14,7 +15,8 @@ export default class UserPage extends React.Component {
         gender: '',
         location: '',
         createdAt: '',
-        updatedAt: ''
+        updatedAt: '',
+        allUserSummaries: []
     };
 
     componentWillMount() {
@@ -29,6 +31,12 @@ export default class UserPage extends React.Component {
                     location: res.data.location,
                     createdAt: res.data.createdAt,
                     updatedAt: res.data.updatedAt
+                })
+            });
+        getAllAuthorSummaries(this.state.user.id)
+            .then((res) => {
+                this.setState({
+                    allUserSummaries: res.data
                 })
             })
     }
@@ -79,7 +87,7 @@ export default class UserPage extends React.Component {
                     gender: res.data.gender,
                     location: res.data.location,
                 });
-                toastr.success("Ваши данные успешно изменены", "Поздравляем!");
+                toastr.success("Ваши данные успешно изменены", "Успех!");
             })
             .catch((error) => {
                 toastr.warning('Что то пошло не так, обновите страницу', 'Внимание!')
@@ -95,7 +103,7 @@ export default class UserPage extends React.Component {
                         password: '',
                         confirmPassword: ''
                     });
-                    toastr.success("Ваш пароль успешно изменён", "Поздравляем!");
+                    toastr.success("Ваш пароль успешно изменён", "Успех!");
                 })
                 .catch((error) => {
                     toastr.error('Вы неверно ввели повторный пароль', 'Ошибка!')
@@ -103,6 +111,15 @@ export default class UserPage extends React.Component {
         } else {
             toastr.error('Пароль не может быть пустой', 'Ошибка!')
         }
+    };
+
+    updateSummaries = () => {
+        getAllAuthorSummaries(this.state.user.id)
+            .then((res) => {
+                this.setState({
+                    allUserSummaries: res.data.allUserSummaries
+                })
+            })
     };
 
     render() {
@@ -161,6 +178,18 @@ export default class UserPage extends React.Component {
                                    placeholder="Повторите новый пароль"
                                    required/>
                             <button className="fas fa-key" onClick={this.onClickUpdatePassword}>Изменить</button>
+                        </form>
+                    </div>
+                    <hr/>
+                    <div className="container registration">
+                        <form>
+                            <h2>Ваши конспекты</h2>
+                            {this.state.allUserSummaries.map((summary, index) =>
+                                <UserSummaries id={summary.id}
+                                               description={summary.description}
+                                               updateSummaries={this.updateSummaries}
+                                               key={index}
+                                />)}
                         </form>
                     </div>
                 </div>

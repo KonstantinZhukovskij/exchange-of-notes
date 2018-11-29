@@ -8,6 +8,7 @@ exports.postSummary = (req, res) => {
             description: req.body.description,
             text: req.body.text,
             rawText: req.body.rawText,
+            imageSrc: req.body.imageSrc,
             authorId: req.user.id,
         }).then((data) => {
             return res.status(200).json(data)
@@ -60,7 +61,7 @@ exports.getSummaryById = (req, res) => {
 };
 
 exports.getAllAuthorSummaries = (req, res) => {
-    SummaryRepository.getAllAuthorSummaries(req.query.id)
+    SummaryRepository.getAllAuthorSummaries(req.user.id)
         .then((allAuthorSummaries) => {
             res.json(allAuthorSummaries)
         })

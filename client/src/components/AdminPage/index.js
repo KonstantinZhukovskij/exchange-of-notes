@@ -58,7 +58,6 @@ export default class AdminPage extends React.Component {
                         <div className="container registration">
                             <h1>Панель администратора</h1>
                             <h2>Список всех пользователей</h2>
-
                             {this.state.users.map((user, index) =>
                                 <UsersTable id={user.id}
                                             email={user.email}
@@ -79,9 +78,9 @@ export default class AdminPage extends React.Component {
                             <h2>Список конспектов</h2>
                             {this.state.summaries.map((summary, index) =>
                                 <SummariesTable id={summary.id}
-                                                title={summary.title}
-                                                key={index}
+                                                description={summary.description}
                                                 updateSummaries={this.updateSummaries}
+                                                key={index}
                                 />
                             )}
                         </form>

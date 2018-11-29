@@ -1,10 +1,11 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 import ImageUploader from '../ImageUploader';
 import toastr from '../../services/toastr';
 import TextEditor from '../TextEditor'
 import {createSummary} from '../../services/axios';
 
-export default class CreateSummariesPage extends React.Component {
+class CreateSummariesPage extends React.Component {
     state = {
         title: '',
         description: '',
@@ -43,8 +44,8 @@ export default class CreateSummariesPage extends React.Component {
                     text: '',
                     rawText: ''
                 });
-                toastr.success(`Конспект ${res.data.title} успешно создан`, "Поздравляем!");
-                setTimeout(() => window.location = "/", 1000);
+                toastr.success(`Конспект ${res.data.title} успешно создан`, "Успех!");
+                this.props.history.push('/')
             })
             .catch((error) => {
                 toastr.warning('Проверьте все ли поля заполнены', 'Внимание!')
@@ -54,7 +55,8 @@ export default class CreateSummariesPage extends React.Component {
     setImageSrcToState = (imageSrc) => {
         this.setState({
             imageSrc: imageSrc
-        })
+        });
+        toastr.success('Ваша картинка успешно загружена')
     };
 
     render() {
@@ -92,3 +94,5 @@ export default class CreateSummariesPage extends React.Component {
         );
     }
 }
+
+export default withRouter(CreateSummariesPage);

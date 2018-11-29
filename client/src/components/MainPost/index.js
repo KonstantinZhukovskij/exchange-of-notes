@@ -24,9 +24,8 @@ export default class MainPost extends React.Component {
                     </div>
                 </header>
                 <Link to={"summary/" + this.props.id} className="image featured">
-
                     <img id="imgMainPost"
-                         src=""
+                         src={this.props.imageSrc}
                          alt="summary"/>
                 </Link>
                 <footer>

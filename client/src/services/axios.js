@@ -39,6 +39,10 @@ export function deleteSummaryById(id) {
     return axios.delete('/summary', {data: {id: id}})
 }
 
+export function getAllAuthorSummaries(userId) {
+    return axios.get('/authorSummary', userId)
+}
+
 export function getAllUsers() {
     return axios.get('/users')
 }

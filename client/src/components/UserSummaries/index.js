@@ -2,7 +2,7 @@ import React from 'react';
 import toastr from "../../services/toastr";
 import {deleteSummaryById} from '../../services/axios'
 
-export default class SummariesTable extends React.Component {
+export default class UserSummaries extends React.Component {
 
     onClickDeleteSummary = (event) => {
         event.preventDefault();

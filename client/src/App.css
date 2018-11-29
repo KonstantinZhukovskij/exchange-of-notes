@@ -2472,10 +2472,23 @@ body {
     margin-left: 120px;
 }
 
-/*#imgMainPost {*/
-/*display: block;*/
-/*margin-left: auto;*/
-/*margin-right: auto;*/
-/*height: 300px;*/
-/*width: 500px;*/
-/*}*/
+#imgMainPost {
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#sideBarImage {
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#singlePostImage {
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -17,6 +17,7 @@ class SinglePost extends React.Component {
             authorId: '',
             summaryId: '',
             createdAt: '',
+            imageSrc: '',
             comment: '',
             comments: [],
             likes: []
@@ -34,6 +35,7 @@ class SinglePost extends React.Component {
                     description: res.data.description,
                     text: res.data.text,
                     createdAt: res.data.createdAt,
+                    imageSrc: res.data.imageSrc,
                     likes: [...res.data.likes, ...this.state.likes]
                 });
             });
@@ -67,7 +69,7 @@ class SinglePost extends React.Component {
                         this.setState({
                             comment: ''
                         });
-                        toastr.success("Ваш комментарий добавлен", "Поздравляем!");
+                        toastr.success("Ваш комментарий добавлен", "Успех!");
 
                         getAllCommentsToSummary(this.props.match.params.id)
                             .then((res) => {
@@ -135,6 +137,10 @@ class SinglePost extends React.Component {
                         <p className="author"><span className="name">Автор: {author}</span></p>
                     </div>
                 </header>
+                <a className="image featured" id="singlePostImage">
+                    <img src={this.state.imageSrc} alt="summary"/>
+                </a>
+                <hr/>
                 <ul className="actions">
                     <div id="previewSummary">
                         <PreviewSummary text={this.state.text}/>

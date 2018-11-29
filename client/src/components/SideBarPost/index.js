@@ -17,8 +17,8 @@ export default class SideBarPost extends React.Component {
                     <p className="published">{time}</p>
                     <p>{author}</p>
                 </header>
-                <Link to={"summary/" + this.props.id} className="image"><img
-                    src="https://cs6.pikabu.ru/post_img/big/2017/09/05/7/1504605947158114655.jpg" alt=""/></Link>
+                <Link to={"summary/" + this.props.id} className="image" id="sideBarImage"><img
+                    src={this.props.imageSrc} alt="summary"/></Link>
             </article>
         );
     }
