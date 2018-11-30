@@ -2,6 +2,7 @@ import React from 'react';
 import MainPost from '../MainPost';
 import Pagination from '../Pagination';
 import SideBar from '../SideBar';
+import axios from 'axios';
 import {getAllCommentsToSummary, getPaginationSummaries, getPopularSummaries} from '../../services/axios'
 
 export default class Main extends React.Component {
@@ -51,6 +52,16 @@ export default class Main extends React.Component {
                     })
             });
     }
+
+    checkAuthentication = () => {
+        axios.get('/checkAuth')
+            .then((res) => {
+                if (res.data.user) {
+                    const serializedUser = JSON.stringify(res.data.user);
+                    localStorage.setItem('user', serializedUser);
+                }
+            })
+    };
 
     componentDidUpdate() {
         window.scrollTo(0, 0)

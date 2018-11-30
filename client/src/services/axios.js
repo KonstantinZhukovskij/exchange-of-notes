@@ -80,7 +80,7 @@ export function putUpdateSummary(summaryId, dataToSend) {
 }
 
 export function getLogout() {
-    return axios.put('/logout')
+    return axios.get('/logout')
 }
 
 export function sendSearchQuery(dataToSend) {
@@ -100,8 +100,4 @@ export function uploadImage(file) {
     };
 
     return axios.post('https://imgbb.com/json', formData, config);
-}
-
-export function facebookLogin() {
-    return axios.get('/auth/facebook')
 }

@@ -61,7 +61,7 @@ module.exports = (db, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
-        vkId: {
+        githubId: {
             type: DataTypes.STRING,
             unique: true
         },

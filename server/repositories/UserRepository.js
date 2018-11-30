@@ -4,6 +4,15 @@ const PSW_RESET_TOKEN_VALID_FOR = 3;
 const ONE_HOUR = 3600000;
 let repository = {};
 
+getEmailFromGithubProfile = (profile) => {
+    let email;
+    if (profile.emails && profile.emails.length > 0 && profile.emails[0].value)
+        email = profile.emails[0].value;
+    else
+        email = profile.id + '@github.com';
+    return email;
+};
+
 repository.getUserById = (userId) => {
     return db.User.findById(userId)
 };
@@ -83,7 +92,6 @@ repository.findUserByResetPswToken = (token) => {
     });
 };
 
-
 repository.changeUserPswAndResetToken = (token, newPassword) => {
     if (!token || token.length < 1)
         throw 'Token cannot be empty!';
@@ -101,12 +109,6 @@ repository.changeUserPswAndResetToken = (token, newPassword) => {
             user.set('resetPasswordExpires', null);
             return user.save();
         });
-};
-
-repository.linkVkProfile = () => {
-};
-
-repository.createAccFromVK = () => {
 };
 
 repository.linkFacebookProfile = (userId, accessToken, refreshToken, profile) => {
@@ -128,7 +130,7 @@ repository.linkFacebookProfile = (userId, accessToken, refreshToken, profile) =>
         });
 };
 
-repository.createAccFromFacebook = (accessToken, refreshToken, profile) => {
+repository.createAccountFromFacebook = (accessToken, refreshToken, profile) => {
     if (!profile._json) {
         throw 'Facebook profile is missing json property!';
     }
@@ -140,7 +142,7 @@ repository.createAccFromFacebook = (accessToken, refreshToken, profile) => {
             return db.User.findOne({where: {email: profile._json.email}})
                 .then((emailUser) => {
                     if (emailUser)
-                        throw 'There is already an account using this email address. Sign in to that account and link it with Facebook manually from Account Settings.';
+                        throw 'There is already an account using this email address';
                     const user = db.User.build({facebookId: profileId});
                     user.email = profile._json.email || (profileId + '@facebook.com');
                     user.tokens = {facebook: accessToken};
@@ -153,11 +155,59 @@ repository.createAccFromFacebook = (accessToken, refreshToken, profile) => {
         });
 };
 
+repository.linkGithubProfile = (userId, accessToken, tokenSecret, profile) => {
+    const profileId = profile.id.toString();
+
+    return db.User.findOne({where: {githubId: profileId}})
+        .then((existingUser) => {
+            if (existingUser)
+                throw 'There is already a GitHub account that belongs to you';
+            return db.User.findById(userId);
+        })
+        .then(function (user) {
+            user.githubId = profileId;
+            if (!user.tokens) user.tokens = {};
+            if (!user.profile) user.profile = {};
+            user.tokens.github = accessToken;
+            user.profile.name = user.profile.name || profile.displayName;
+            user.profile.location = user.profile.location || profile._json.location;
+            user.profile.website = user.profile.website || profile._json.blog;
+            user.set('tokens', user.tokens);
+            user.set('profile', user.profile);
+            return user.save();
+        });
+};
+
+repository.createAccountFromGithub = function (accessToken, tokenSecret, profile) {
+    const profileId = profile.id.toString();
+    const email = getEmailFromGithubProfile(profile);
+    if (!profile._json)
+        profile._json = {};
+    return db.User.findOne({where: {githubId: profileId}})
+        .then(function (existingUser) {
+            if (existingUser)
+                return existingUser;
+            return db.User.findOne({where: {email: email}})
+                .then(function (emailUser) {
+                    if (emailUser)
+                        throw 'There is already an account using this email address.';
+                    const user = db.User.build({githubId: profileId});
+                    user.email = email;
+                    user.tokens = {github: accessToken};
+                    user.profile = {
+                        name: profile.displayName,
+                        location: profile._json.location,
+                    };
+                    return user.save();
+                });
+        });
+};
+
 repository.linkTwitterProfile = (userId, accessToken, tokenSecret, profile) => {
     return db.User.findOne({where: {twitterId: profile.id.toString()}})
         .then((existingUser) => {
             if (existingUser)
-                throw 'There is already a Twitter account that belongs to you. Sign in with that account or delete it, then link it with your current account.';
+                throw 'There is already a Twitter account that belongs to you';
             return db.User.findById(userId);
         })
         .then((user) => {
@@ -174,7 +224,7 @@ repository.linkTwitterProfile = (userId, accessToken, tokenSecret, profile) => {
         });
 };
 
-repository.createAccFromTwitter = (accessToken, tokenSecret, profile) => {
+repository.createAccountFromTwitter = (accessToken, tokenSecret, profile) => {
     return db.User.findOne({where: {twitterId: profile.id.toString()}})
         .then((existingUser) => {
             if (existingUser)

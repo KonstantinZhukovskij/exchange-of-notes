@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import {getLogout, sendSearchQuery} from '../../services/axios';
+import {sendSearchQuery} from '../../services/axios';
 
 const CreateButton = () => (
     <li>
@@ -52,12 +52,7 @@ class Header extends React.Component {
 
     onClickLogout = (event) => {
         event.preventDefault();
-        localStorage.clear();
-        getLogout();
-        this.setState({
-            isUser: false,
-        });
-        window.location = "/"
+        this.props.onLogout()
     };
 
     renderButtonIfUserIsLogged = () => {
@@ -111,7 +106,7 @@ class Header extends React.Component {
                             </form>
                         </li>
                         {
-                            this.state.isUser
+                            this.props.isLogged
                                 ? this.renderButtonIfUserIsLogged()
                                 : this.renderButtonIfUserIsGuest()
                         }

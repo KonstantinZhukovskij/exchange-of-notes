@@ -30,6 +30,7 @@ ReactDOM.render(
                 }}/>
                 <Route exact path="/about" component={AboutUsPage}/>
                 <Route exact path="/account/profile" render={() => {
+                    const returnUser = JSON.parse(localStorage.getItem("user"));
                     return returnUser ? <UserPage/> : <Redirect to={'/login'}/>
                 }}/>
                 <Route exact path="/admin" render={() => {

@@ -2513,3 +2513,7 @@ body {
     margin-top: 25px;
     margin-right: 14px;
 }
+
+#gitButton {
+    background-color: #333333;
+}

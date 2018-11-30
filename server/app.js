@@ -18,7 +18,6 @@ const connectAssets = require('connect-assets');
 const db = require('./models/sequelize');
 const secrets = require('./config/secrets');
 const passportConfig = require('./config/passport');
-const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const summaryController = require('./controllers/summary');
 const searchController = require('./controllers/search');
@@ -77,7 +76,6 @@ app.use((req, res, next) => {
 });
 app.use(express.static(path.join(__dirname, 'public'), {maxAge: 2592000000}));
 
-app.get('/', homeController.index);
 app.post('/registration', userController.registration);
 app.post('/login', userController.login);
 app.get('/logout', userController.logout);
@@ -102,23 +100,34 @@ app.post('/comment', commentController.postComment);
 app.get('/comment/:id', commentController.getAllCommentsToSummary);
 app.post('/question', questionController.createQuestion);
 app.get('/question', questionController.getAllQuestions);
-
 app.get('/search', searchController.getFoundText);
 
 safeRedirectToReturnTo = (req, res) => {
+    res.cookie('user', JSON.stringify(req.user.dataValues));
     res.redirect('http://localhost:3000');
 };
 
 app.get('/auth/facebook', passport.authenticate('facebook', secrets.facebook.authOptions));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-    successRedirect: '/',
+    failureRedirect: 'http://localhost:3000/login',
+}), safeRedirectToReturnTo);
+app.get('/checkAuth', (req, res) => {
+    if (req.isAuthenticated()) {
+        return res.json({user: req.user.dataValues})
+    } else {
+        return res.status(401).json()
+    }
+});
+
+app.get('/auth/github', passport.authenticate('github', secrets.github.authOptions));
+app.get('/auth/github/callback', passport.authenticate('github', {
     failureRedirect: 'http://localhost:3000/login',
 }), safeRedirectToReturnTo);
 
+
 app.get('/auth/twitter', passport.authenticate('twitter', secrets.twitter.authOptions));
 app.get('/auth/twitter/callback', passport.authenticate('twitter', {
-    failureRedirect: '/login',
-    failureFlash: true
+    failureRedirect: 'http://localhost:3000/login',
 }), safeRedirectToReturnTo);
 
 app.use(errorHandler());

@@ -1,5 +1,5 @@
 import React from 'react';
-import {facebookLogin, login} from '../../services/axios';
+import {login} from '../../services/axios';
 import toastr from '../../services/toastr';
 
 export default class LoginPage extends React.Component {
@@ -19,17 +19,6 @@ export default class LoginPage extends React.Component {
             password: event.target.value
         })
     };
-
-    onClickFacebookLogin = (event) => {
-        event.preventDefault();
-        facebookLogin()
-            .then((res) => {
-                console.log(res)
-            }).catch((error) => {
-            console.log(error)
-        })
-    };
-
 
     onClickLogin = (event) => {
         event.preventDefault();
@@ -54,13 +43,13 @@ export default class LoginPage extends React.Component {
                             <div className="vl">
                             </div>
                             <div className="col">
-                                <a className="vk btn">
-                                    <i className="fa fa-vk fa-fw"/> Войти с помощью VK
+                                <a href="http://localhost:3001/auth/github" className="fb btn" id="gitButton">
+                                    <i className="fa fa-github fa-fw"/> Войти с помощью Git
                                 </a>
                                 <a href="http://localhost:3001/auth/facebook" className="fb btn">
                                     <i className="fa fa-facebook fa-fw"/> Войти с помощью Facebook
                                 </a>
-                                <a className="twitter btn">
+                                <a href="http://localhost:3001/auth/twitter" className="twitter btn">
                                     <i className="fa fa-twitter fa-fw"/> Войти с помощью Twitter
                                 </a>
                             </div>
@@ -78,7 +67,6 @@ export default class LoginPage extends React.Component {
                                 <button className="fas fa-sign-in-alt" id='loginButton'
                                         onClick={this.onClickLogin}>Войти
                                 </button>
-                                <a href="URL" className="btn" id="forgot">Забыли пароль?</a>
                             </div>
                         </div>
                     </form>

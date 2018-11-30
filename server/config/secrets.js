@@ -28,13 +28,22 @@ module.exports = {
         authOptions: {scope: ['email', 'user_location']}
     },
 
+    github: {
+        clientID: process.env.GITHUB_ID || '3a0bed93a557426bb71b',
+        clientSecret: process.env.GITHUB_SECRET || '34f507070717a8af6ca7bca110c32408b754a6be',
+        callbackURL: 'http://localhost:3001/auth/github/callback',
+        passReqToCallback: true,
+        enableProof: true,
+        authOptions: {scope: ['email', 'user_location']}
+    },
+
     twitter: {
         consumerKey: process.env.TWITTER_KEY || '6NNBDyJ2TavL407A3lWxPFKBI',
         consumerSecret: process.env.TWITTER_SECRET || 'ZHaYyK3DQCqv49Z9ofsYdqiUgeoICyh6uoBgFfu7OeYC7wTQKa',
         callbackURL: 'http://localhost:3001/auth/twitter/callback',
         passReqToCallback: true,
         enableProof: true,
-        authOptions: {}
+        authOptions: {scope: ['email', 'user_location']}
     }
 };
 
