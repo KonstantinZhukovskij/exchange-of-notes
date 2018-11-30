@@ -1,16 +1,10 @@
 import React from 'react';
-import toastr from "../../services/toastr";
-import {deleteSummaryById} from '../../services/axios'
 
 export default class UserSummaries extends React.Component {
 
     onClickDeleteSummary = (event) => {
         event.preventDefault();
-        deleteSummaryById(this.props.id)
-            .then(() => {
-                this.props.updateSummaries();
-                toastr.success("Конспект успешно удалён");
-            })
+        this.props.deleteSummary(this.props.id)
     };
 
     render() {

@@ -11,7 +11,8 @@ class CreateSummariesPage extends React.Component {
         description: '',
         text: '',
         rawText: '',
-        imageSrc: ''
+        imageSrc: 'https://i.ibb.co/YQ59L3n/600px-No-image-available-svg.png',
+        likes: []
     };
 
     onChangeTitle = (event) => {
@@ -34,7 +35,8 @@ class CreateSummariesPage extends React.Component {
             description: this.state.description,
             text: rawContent,
             rawText: this.refs.textEditorRef.getRawText(),
-            imageSrc: this.state.imageSrc
+            imageSrc: this.state.imageSrc,
+            likes: this.state.likes
         };
         createSummary(dataToSend)
             .then((res) => {

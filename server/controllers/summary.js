@@ -9,6 +9,7 @@ exports.postSummary = (req, res) => {
             text: req.body.text,
             rawText: req.body.rawText,
             imageSrc: req.body.imageSrc,
+            likes: req.body.likes,
             authorId: req.user.id,
         }).then((data) => {
             return res.status(200).json(data)

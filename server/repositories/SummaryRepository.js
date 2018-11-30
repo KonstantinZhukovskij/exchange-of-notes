@@ -4,7 +4,7 @@ const db = require('../models/sequelize');
 let repository = {};
 
 repository.createSummary = (summary) => {
-    if (summary.title !== null && summary.description !== null && summary.text !== null && summary.rawText !== null) {
+    if (summary.title !== null && summary.description !== null && summary.text !== null) {
         const dbSummary = db.Summary.build(summary);
         return dbSummary.save()
     } else {

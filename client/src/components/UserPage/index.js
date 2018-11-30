@@ -2,7 +2,13 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import toastr from '../../services/toastr'
 import UserSummaries from "../UserSummaries";
-import {getAllAuthorSummaries, getUserById, putUpdateAccount, putUpdatePassword} from '../../services/axios'
+import {
+    deleteSummaryById,
+    getAllAuthorSummaries,
+    getUserById,
+    putUpdateAccount,
+    putUpdatePassword
+} from '../../services/axios'
 
 export default class UserPage extends React.Component {
     state = {
@@ -114,11 +120,19 @@ export default class UserPage extends React.Component {
         }
     };
 
+    deleteSummary = (summaryId) => {
+        deleteSummaryById(summaryId)
+            .then(() => {
+                this.updateSummaries();
+                toastr.success("Конспект успешно удалён");
+            })
+    };
+
     updateSummaries = () => {
         getAllAuthorSummaries(this.state.user.id)
             .then((res) => {
                 this.setState({
-                    allUserSummaries: res.data.allUserSummaries
+                    allUserSummaries: res.data.allUserSummaries ? res.data.allUserSummaries : []
                 })
             })
     };
@@ -193,7 +207,7 @@ export default class UserPage extends React.Component {
                             {this.state.allUserSummaries.map((summary, index) =>
                                 <UserSummaries id={summary.id}
                                                description={summary.description}
-                                               updateSummaries={this.updateSummaries}
+                                               deleteSummary={this.deleteSummary}
                                                key={index}
                                 />)}
                         </form>
