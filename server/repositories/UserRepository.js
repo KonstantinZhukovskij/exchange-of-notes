@@ -123,7 +123,6 @@ repository.linkFacebookProfile = (userId, accessToken, refreshToken, profile) =>
             if (!user.profile) user.profile = {};
             user.tokens.facebook = accessToken;
             user.profile.name = user.profile.name || profile.displayName;
-            user.profile.gender = user.profile.gender || profile._json.gender;
             user.set('tokens', user.tokens);
             user.set('profile', user.profile);
             return user.save();
@@ -148,7 +147,6 @@ repository.createAccountFromFacebook = (accessToken, refreshToken, profile) => {
                     user.tokens = {facebook: accessToken};
                     user.profile = {
                         name: profile.displayName,
-                        gender: profile.gender
                     };
                     return user.save();
                 });
@@ -157,38 +155,35 @@ repository.createAccountFromFacebook = (accessToken, refreshToken, profile) => {
 
 repository.linkGithubProfile = (userId, accessToken, tokenSecret, profile) => {
     const profileId = profile.id.toString();
-
     return db.User.findOne({where: {githubId: profileId}})
         .then((existingUser) => {
             if (existingUser)
                 throw 'There is already a GitHub account that belongs to you';
             return db.User.findById(userId);
         })
-        .then(function (user) {
+        .then((user) => {
             user.githubId = profileId;
             if (!user.tokens) user.tokens = {};
             if (!user.profile) user.profile = {};
             user.tokens.github = accessToken;
             user.profile.name = user.profile.name || profile.displayName;
-            user.profile.location = user.profile.location || profile._json.location;
-            user.profile.website = user.profile.website || profile._json.blog;
             user.set('tokens', user.tokens);
             user.set('profile', user.profile);
             return user.save();
         });
 };
 
-repository.createAccountFromGithub = function (accessToken, tokenSecret, profile) {
+repository.createAccountFromGithub = (accessToken, tokenSecret, profile) => {
     const profileId = profile.id.toString();
     const email = getEmailFromGithubProfile(profile);
     if (!profile._json)
         profile._json = {};
     return db.User.findOne({where: {githubId: profileId}})
-        .then(function (existingUser) {
+        .then((existingUser) => {
             if (existingUser)
                 return existingUser;
             return db.User.findOne({where: {email: email}})
-                .then(function (emailUser) {
+                .then((emailUser) => {
                     if (emailUser)
                         throw 'There is already an account using this email address.';
                     const user = db.User.build({githubId: profileId});
@@ -196,7 +191,6 @@ repository.createAccountFromGithub = function (accessToken, tokenSecret, profile
                     user.tokens = {github: accessToken};
                     user.profile = {
                         name: profile.displayName,
-                        location: profile._json.location,
                     };
                     return user.save();
                 });
@@ -217,7 +211,6 @@ repository.linkTwitterProfile = (userId, accessToken, tokenSecret, profile) => {
             user.tokens.twitter = accessToken;
             user.tokens.twitterSecret = tokenSecret;
             user.profile.name = user.profile.name || profile.displayName;
-            user.profile.location = user.profile.location || profile._json.location;
             user.set('tokens', user.tokens);
             user.set('profile', user.profile);
             return user.save();
@@ -234,9 +227,47 @@ repository.createAccountFromTwitter = (accessToken, tokenSecret, profile) => {
             user.tokens = {twitter: accessToken, twitterSecret: tokenSecret};
             user.profile = {
                 name: profile.displayName,
-                location: profile._json.location
             };
             return user.save();
+        });
+};
+
+repository.linkLinkedInProfile = (userId, accessToken, tokenSecret, profile) => {
+    return db.User.findOne({where: {linkedInId: profile.id.toString()}})
+        .then((existingUser) => {
+            if (existingUser)
+                throw 'There is already a LinkedIn account that belongs to you';
+            return db.User.findById(userId);
+        })
+        .then((user) => {
+            user.linkedInId = profile.id.toString();
+            if (!user.tokens) user.tokens = {};
+            if (!user.profile) user.profile = {};
+            user.tokens.linkedin = accessToken;
+            user.profile.name = user.profile.name || profile.displayName;
+            user.set('tokens', user.tokens);
+            user.set('profile', user.profile);
+            return user.save();
+        });
+};
+
+repository.createAccountFromLinkedIn = (accessToken, tokenSecret, profile) => {
+    return db.User.findOne({where: {linkedInId: profile.id.toString()}})
+        .then((existingUser) => {
+            if (existingUser)
+                return existingUser;
+            return db.User.findOne({where: {email: profile._json.emailAddress}})
+                .then((existingEmailUser) => {
+                    if (existingEmailUser)
+                        throw 'There is already an account using this email address';
+                    const user = db.User.build({linkedInId: profile.id.toString()});
+                    user.email = profile._json.emailAddress;
+                    user.tokens = {linkedin: accessToken};
+                    user.profile = {
+                        name: profile.displayName,
+                    };
+                    return user.save();
+                });
         });
 };
 

@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GitHubStrategy = require('passport-github').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
+const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 const secrets = require('./secrets');
 const db = require('../models/sequelize');
 const UserRepository = require('../repositories/UserRepository');
@@ -16,7 +17,7 @@ passport.deserializeUser((id, done) => {
     db.User.findById(id)
         .then((user) => {
             done(null, user);
-        }).catch(function (error) {
+        }).catch((error) => {
         done(error);
     });
 });
@@ -57,8 +58,8 @@ passport.use(new GitHubStrategy(secrets.github, (req, accessToken, refreshToken,
             .then((user) => {
                 done(null, user);
             })
-            .catch(function (err) {
-                done(null, false, {message: err});
+            .catch((error) => {
+                done(null, false, {message: error});
             });
     } else {
         UserRepository.createAccountFromGithub(accessToken, refreshToken, profile)
@@ -82,6 +83,26 @@ passport.use(new TwitterStrategy(secrets.twitter, (req, accessToken, tokenSecret
             });
     } else {
         UserRepository.createAccountFromTwitter(accessToken, tokenSecret, profile)
+            .then((user) => {
+                done(null, user);
+            })
+            .catch((error) => {
+                done(error);
+            });
+    }
+}));
+
+passport.use(new LinkedInStrategy(secrets.linkedin, (req, accessToken, refreshToken, profile, done) => {
+    if (req.user) {
+        UserRepository.linkLinkedInProfile(req.user.id, accessToken, refreshToken, profile)
+            .then((user) => {
+                done(null, user);
+            })
+            .catch((error) => {
+                done(null, false, {message: error});
+            });
+    } else {
+        UserRepository.createAccountFromLinkedIn(accessToken, refreshToken, profile)
             .then((user) => {
                 done(null, user);
             })

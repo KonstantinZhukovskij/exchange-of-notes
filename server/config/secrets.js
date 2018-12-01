@@ -38,13 +38,23 @@ module.exports = {
     },
 
     twitter: {
-        consumerKey: process.env.TWITTER_KEY || '6NNBDyJ2TavL407A3lWxPFKBI',
-        consumerSecret: process.env.TWITTER_SECRET || 'ZHaYyK3DQCqv49Z9ofsYdqiUgeoICyh6uoBgFfu7OeYC7wTQKa',
+        consumerKey: process.env.TWITTER_KEY || '---------------------',
+        consumerSecret: process.env.TWITTER_SECRET || '--------------------------',
         callbackURL: 'http://localhost:3001/auth/twitter/callback',
         passReqToCallback: true,
         enableProof: true,
         authOptions: {scope: ['email', 'user_location']}
-    }
+    },
+
+    linkedin: {
+        clientID: process.env.LINKEDIN_ID || '86gqm6vc1be3vg',
+        clientSecret: process.env.LINKEDIN_SECRET || 'CgQbBzTqhSBF1e6K',
+        callbackURL: process.env.LINKEDIN_CALLBACK_URL || 'http://localhost:3001/auth/linkedin/callback',
+        scope: ['r_basicprofile', 'r_emailaddress'],
+        passReqToCallback: true,
+        enableProof: true,
+        authOptions: {state: 'SOME STATE'}
+    },
 };
 
 module.exports.postgres = process.env.DATABASE_URL || 'postgres://postgres:root@localhost:5432/Users';

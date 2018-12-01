@@ -107,10 +107,6 @@ safeRedirectToReturnTo = (req, res) => {
     res.redirect('http://localhost:3000');
 };
 
-app.get('/auth/facebook', passport.authenticate('facebook', secrets.facebook.authOptions));
-app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-    failureRedirect: 'http://localhost:3000/login',
-}), safeRedirectToReturnTo);
 app.get('/checkAuth', (req, res) => {
     if (req.isAuthenticated()) {
         return res.json({user: req.user.dataValues})
@@ -118,6 +114,11 @@ app.get('/checkAuth', (req, res) => {
         return res.status(401).json()
     }
 });
+
+app.get('/auth/facebook', passport.authenticate('facebook', secrets.facebook.authOptions));
+app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+    failureRedirect: 'http://localhost:3000/login',
+}), safeRedirectToReturnTo);
 
 app.get('/auth/github', passport.authenticate('github', secrets.github.authOptions));
 app.get('/auth/github/callback', passport.authenticate('github', {
@@ -129,6 +130,12 @@ app.get('/auth/twitter', passport.authenticate('twitter', secrets.twitter.authOp
 app.get('/auth/twitter/callback', passport.authenticate('twitter', {
     failureRedirect: 'http://localhost:3000/login',
 }), safeRedirectToReturnTo);
+
+app.get('/auth/linkedin', passport.authenticate('linkedin', secrets.linkedin.authOptions));
+app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
+    failureRedirect: 'http://localhost:3000/login',
+}), safeRedirectToReturnTo);
+
 
 app.use(errorHandler());
 

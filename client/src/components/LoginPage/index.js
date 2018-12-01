@@ -43,14 +43,14 @@ export default class LoginPage extends React.Component {
                             <div className="vl">
                             </div>
                             <div className="col">
-                                <a href="http://localhost:3001/auth/github" className="fb btn" id="gitButton">
-                                    <i className="fa fa-github fa-fw"/> Войти с помощью Git
-                                </a>
                                 <a href="http://localhost:3001/auth/facebook" className="fb btn">
                                     <i className="fa fa-facebook fa-fw"/> Войти с помощью Facebook
                                 </a>
-                                <a href="http://localhost:3001/auth/twitter" className="twitter btn">
-                                    <i className="fa fa-twitter fa-fw"/> Войти с помощью Twitter
+                                <a href="http://localhost:3001/auth/github" className="fb btn" id="gitButton">
+                                    <i className="fa fa-github fa-fw"/> Войти с помощью GitHub
+                                </a>
+                                <a href="http://localhost:3001/auth/linkedin" className="fb btn" id="linkedinButton">
+                                    <i className="fa fa-linkedin fa-fw"/> Войти с помощью LinkedIn
                                 </a>
                             </div>
                             <div className="col">

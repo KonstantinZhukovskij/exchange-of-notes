@@ -61,15 +61,19 @@ module.exports = (db, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
-        githubId: {
-            type: DataTypes.STRING,
-            unique: true
-        },
         facebookId: {
             type: DataTypes.STRING,
             unique: true
         },
         twitterId: {
+            type: DataTypes.STRING,
+            unique: true
+        },
+        linkedInId: {
+            type: DataTypes.STRING,
+            unique: true
+        },
+        githubId: {
             type: DataTypes.STRING,
             unique: true
         },
@@ -143,11 +147,6 @@ module.exports = (db, DataTypes) => {
         },
         indexes: [
             {
-                name: 'vkIdIndex',
-                method: 'BTREE',
-                fields: ['vkId']
-            },
-            {
                 name: 'facebookIdIndex',
                 method: 'BTREE',
                 fields: ['facebookId']
@@ -156,7 +155,17 @@ module.exports = (db, DataTypes) => {
                 name: 'twitterIdIndex',
                 method: 'BTREE',
                 fields: ['twitterId']
-            }
+            },
+            {
+                name: 'githubIdIndex',
+                method: 'BTREE',
+                fields: ['githubId']
+            },
+            {
+                name: 'linkedInIdIndex',
+                method: 'BTREE',
+                fields: ['linkedInId']
+            },
         ]
     });
     return User;
