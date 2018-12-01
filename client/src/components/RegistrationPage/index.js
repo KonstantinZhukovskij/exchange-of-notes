@@ -1,9 +1,9 @@
 import React from 'react';
 import toastr from "../../services/toastr";
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom'
 import {registration} from "../../services/axios";
 
-export default class RegistrationPage extends React.Component {
+class RegistrationPage extends React.Component {
     state = {
         email: '',
         password: '',
@@ -33,7 +33,7 @@ export default class RegistrationPage extends React.Component {
         registration(this.state)
             .then((res) => {
                 toastr.success(`Вы успешно зарегистрированы ${res.data.email}`, "Успех!");
-                setTimeout(() => window.location = "/login", 1000);
+                setTimeout(() => this.props.history.push('http://localhost:3000/login'), 1000);
             })
             .catch((error) => {
                 toastr.error('Вы ввели не верные данные, или заполнили не все поля', 'Ошибка!')
@@ -75,3 +75,5 @@ export default class RegistrationPage extends React.Component {
         );
     }
 }
+
+export default withRouter(RegistrationPage);

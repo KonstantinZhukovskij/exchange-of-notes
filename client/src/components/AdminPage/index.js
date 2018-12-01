@@ -1,9 +1,10 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom'
 import {getAllUsers, getPaginationSummaries, getUserById} from '../../services/axios';
 import UsersTable from '../UsersTable';
 import SummariesTable from '../SummariesTable';
 
-export default class AdminPage extends React.Component {
+class AdminPage extends React.Component {
     state = {
         summaries: [],
         users: [],
@@ -27,7 +28,7 @@ export default class AdminPage extends React.Component {
                             })
                         })
                 } else {
-                    window.location.href = "http://localhost:3000";
+                    this.props.history.push('http://localhost:3000');
                 }
             })
     }
@@ -66,8 +67,8 @@ export default class AdminPage extends React.Component {
                                             gender={user.gender}
                                             location={user.location}
                                             isAdmin={user.isAdmin}
-                                            key={index}
                                             updateUsers={this.updateUsers}
+                                            key={index}
                                 />
                             )}
                         </div>
@@ -90,3 +91,5 @@ export default class AdminPage extends React.Component {
         )
     }
 }
+
+export default withRouter(AdminPage);

@@ -61,7 +61,7 @@ class SinglePost extends React.Component {
             const newComment = {
                 text: this.state.comment,
                 summaryId: this.props.match.params.id,
-                authorId: returnUser.id
+                authorId: returnUser.user.id
             };
             if (this.state.comment.length > 5) {
                 createComment(newComment)

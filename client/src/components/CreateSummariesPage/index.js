@@ -53,7 +53,6 @@ class CreateSummariesPage extends React.Component {
                 toastr.warning('Проверьте все ли поля заполнены', 'Внимание!')
             });
     };
-
     setImageSrcToState = (imageSrc) => {
         this.setState({
             imageSrc: imageSrc

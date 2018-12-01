@@ -32,12 +32,13 @@ repository.getPaginationSummaries = (limit, offset) => {
             ['createdAt', 'DESC']
         ]
     }).then((summaries) => {
-        return db.Summary.count().then((count) => {
-            return {
-                summaries: summaries,
-                count: count
-            }
-        })
+        return db.Summary.count()
+            .then((count) => {
+                return {
+                    summaries: summaries,
+                    count: count
+                }
+            })
     });
 };
 

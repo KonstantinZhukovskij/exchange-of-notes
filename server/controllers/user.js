@@ -1,8 +1,4 @@
-const crypto = require('crypto');
-const async = require('neo-async');
 const passport = require('passport');
-const emailService = require('../services/emailService.js');
-const SummaryRepository = require('../repositories/SummaryRepository');
 const UserRepository = require('../repositories/UserRepository.js');
 
 exports.login = (req, res, next) => {
@@ -108,89 +104,4 @@ exports.createAdmin = (req, res) => {
         .catch((error) => {
             return res.status(500).json(error)
         });
-};
-
-exports.getReset = (req, res) => {
-    if (req.isAuthenticated()) {
-        return res.redirect('/');
-    }
-
-    UserRepository.findUserByResetPswToken(req.params.token)
-        .then((user) => {
-            if (!user) {
-                throw 'Password reset request is invalid or has expired.';
-            }
-        })
-        .catch((error) => {
-            return res.redirect('/forgot');
-        });
-};
-
-exports.postReset = (req, res, next) => {
-    req.assert('password', 'Password must be at least 4 characters long.').len(4);
-    req.assert('confirmPassword', 'Passwords must match.').equals(req.body.password);
-    const errors = req.validationErrors();
-    if (errors) {
-        return res.redirect('/');
-    }
-    async.waterfall([
-        (done) => {
-            UserRepository.changeUserPswAndResetToken(req.params.token, req.body.password)
-                .then((user) => {
-                    req.logIn(user, (err2) => {
-                        done(err2, user);
-                    });
-                })
-                .catch((err) => {
-                    done(err, null);
-                });
-        },
-        (user, done) => {
-            emailService.sendPasswordChangeNotificationEmail(user.email, (err) => {
-                req.flash('info', {
-                    msg: 'Password has been successfully changed. Notification e-mail has been sent to ' + user.email + ' to inform about this fact.'
-                });
-                done(err, 'done');
-            });
-        }
-    ], (error) => {
-        if (error) return next(error);
-        res.redirect('/');
-    });
-};
-
-exports.forgot = (req, res, next) => {
-    req.assert('email', 'Please enter a valid email address').isEmail();
-    const errors = req.validationErrors();
-    if (errors) {
-        req.flash('errors', errors);
-        return res.redirect('/forgot');
-    }
-    async.waterfall([
-        (done) => {
-            crypto.randomBytes(24, (err, buf) => {
-                const token = buf.toString('hex');
-                done(err, token);
-            });
-        },
-        (token, done) => {
-            const email = req.body.email.toLowerCase();
-            UserRepository.assignResetPswToken(email, token)
-                .then((user) => {
-                    done(null, token, user);
-                })
-                .catch((err) => {
-                    req.flash('errors', {msg: err});
-                    return res.redirect('/forgot');
-                });
-        },
-        (token, user, done) => {
-            emailService.sendRequestPasswordEmail(user.email, req.headers.host, token, (error) => {
-                done(error, 'done');
-            });
-        }
-    ], (error) => {
-        if (error) return next(error);
-        res.json(error);
-    });
 };

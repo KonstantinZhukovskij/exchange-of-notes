@@ -8,6 +8,38 @@ export function login(dataToSend) {
     return axios.post('/login', dataToSend)
 }
 
+export function getLogout() {
+    return axios.get('/logout')
+}
+
+export function getAllAuthorSummaries(userId) {
+    return axios.get('/authorSummary', userId)
+}
+
+export function getAllUsers() {
+    return axios.get('/users')
+}
+
+export function getUserById(userId) {
+    return axios.get('/user', userId)
+}
+
+export function putUpdateAccount(dataToSend) {
+    return axios.put('/account/profile', dataToSend)
+}
+
+export function putUpdatePassword(dataToSend) {
+    return axios.put('/account/password', dataToSend)
+}
+
+export function deleteUser(userId) {
+    return axios.delete('/account/delete', {data: {id: userId}})
+}
+
+export function createAdmin(dataToSend) {
+    return axios.put('/admin', dataToSend)
+}
+
 export function createSummary(dataToSend) {
     return axios.post('/create', dataToSend)
 }
@@ -39,34 +71,6 @@ export function deleteSummaryById(id) {
     return axios.delete('/summary', {data: {id: id}})
 }
 
-export function getAllAuthorSummaries(userId) {
-    return axios.get('/authorSummary', userId)
-}
-
-export function getAllUsers() {
-    return axios.get('/users')
-}
-
-export function getUserById(userId) {
-    return axios.get('/user', userId)
-}
-
-export function putUpdateAccount(dataToSend) {
-    return axios.put('/account/profile', dataToSend)
-}
-
-export function putUpdatePassword(dataToSend) {
-    return axios.put('/account/password', dataToSend)
-}
-
-export function deleteUser(userId) {
-    return axios.delete('/account/delete', {data: {id: userId}})
-}
-
-export function createAdmin(dataToSend) {
-    return axios.put('/admin', dataToSend)
-}
-
 export function getAllCommentsToSummary(summaryId) {
     return axios.get('/comment/' + summaryId)
 }
@@ -77,10 +81,6 @@ export function createComment(dataToSend) {
 
 export function putUpdateSummary(summaryId, dataToSend) {
     return axios.put('/summary/' + summaryId, dataToSend)
-}
-
-export function getLogout() {
-    return axios.get('/logout')
 }
 
 export function sendSearchQuery(dataToSend) {
@@ -98,6 +98,5 @@ export function uploadImage(file) {
             'content-type': 'multipart/form-data'
         }
     };
-
     return axios.post('https://imgbb.com/json', formData, config);
 }

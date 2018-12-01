@@ -35,7 +35,7 @@ module.exports = (db, DataTypes) => {
     }, {
         tableName: 'Summaries',
         classMethods: {
-            associate: function (models) {
+            associate: (models) => {
                 Summary.belongsTo(models.User, {
                     foreignKey: 'authorId'
                 })

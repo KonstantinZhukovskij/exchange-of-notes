@@ -1,8 +1,9 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom'
 import {login} from '../../services/axios';
 import toastr from '../../services/toastr';
 
-export default class LoginPage extends React.Component {
+class LoginPage extends React.Component {
     state = {
         email: '',
         password: '',
@@ -27,7 +28,7 @@ export default class LoginPage extends React.Component {
                 const serializedUser = JSON.stringify(res.data);
                 localStorage.setItem('user', serializedUser);
                 toastr.success(`Вы успешно вошли как ${res.data.email}`, "Успех!");
-                setTimeout(() => window.location = "/", 1000);
+                setTimeout(() => this.props.history.push('http://localhost:3000'), 1000);
             }).catch((error) => {
             toastr.error('Вы ввели не верные данные, или заполнили не все поля', 'Ошибка!')
         })
@@ -75,3 +76,5 @@ export default class LoginPage extends React.Component {
         )
     }
 }
+
+export default withRouter(LoginPage);

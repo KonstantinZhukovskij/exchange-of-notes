@@ -1,26 +1,12 @@
 const bcrypt = require('bcrypt-nodejs');
-const crypto = require('crypto');
 
 const instanceMethods = {
-    getGravatarUrl: function (size) {
-        if (!size) size = 200;
-        if (!this.email) {
-            return 'https://gravatar.com/avatar/?s=' + size + '&d=retro';
-        }
-        const md5 = crypto.createHash('md5').update(this.email).digest('hex');
-        return 'https://gravatar.com/avatar/' + md5 + '?s=' + size + '&d=retro';
-    },
-    getProfilePicture: function (size) {
-        if (this.profile && this.profile.picture != null)
-            return this.profile.picture;
-        return this.getGravatarUrl(size);
-    },
-    hasSetPassword: function () {
+    hasSetPassword: () => {
         return this.password != null && this.password.length > 0;
     }
 };
 
-const beforeSaveHook = function (user, options, fn) {
+const beforeSaveHook = (user, options, fn) => {
     if (user.changed('password')) {
         this.encryptPassword(user.password, (hash, err) => {
             user.password = hash;
@@ -80,12 +66,6 @@ module.exports = (db, DataTypes) => {
         password: {
             type: DataTypes.STRING
         },
-        resetPasswordExpires: {
-            type: DataTypes.DATE
-        },
-        resetPasswordToken: {
-            type: DataTypes.STRING
-        },
         createdAt: {
             type: DataTypes.DATE
         },
@@ -99,7 +79,7 @@ module.exports = (db, DataTypes) => {
         tableName: 'Users',
         instanceMethods: instanceMethods,
         classMethods: {
-            associate: function (models) {
+            associate: (models) => {
             },
             encryptPassword: (password, cb) => {
                 if (!password) {
@@ -129,7 +109,7 @@ module.exports = (db, DataTypes) => {
                             callback('User / Password combination is not correct', null);
                             return;
                         }
-                        bcrypt.compare(password, user.password, function (err, res) {
+                        bcrypt.compare(password, user.password, (err, res) => {
                             if (res)
                                 callback(null, user);
                             else

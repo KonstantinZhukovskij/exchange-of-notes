@@ -21,7 +21,7 @@ module.exports = (db, DataTypes) => {
     }, {
         tableName: 'Comments',
         classMethods: {
-            associate: function (models) {
+            associate: (models) => {
                 Comment.belongsTo(models.User, {
                     foreignKey: "authorId"
                 })
