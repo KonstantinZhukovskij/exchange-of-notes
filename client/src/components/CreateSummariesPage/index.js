@@ -12,7 +12,7 @@ class CreateSummariesPage extends React.Component {
         text: '',
         rawText: '',
         imageSrc: 'https://i.ibb.co/YQ59L3n/600px-No-image-available-svg.png',
-        likes: []
+        likes: [0]
     };
 
     onChangeTitle = (event) => {

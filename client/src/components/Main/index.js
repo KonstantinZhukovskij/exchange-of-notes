@@ -116,7 +116,7 @@ export default class Main extends React.Component {
                                          text={summary.text}
                                          createdAt={summary.createdAt}
                                          commentCount={summary.commentCount}
-                                         likes={summary.likes.length}
+                                         likes={summary.likes.length - 1}
                                          imageSrc={summary.imageSrc}
                                          key={index}/>
                     })}

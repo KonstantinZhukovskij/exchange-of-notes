@@ -98,12 +98,12 @@ class SinglePost extends React.Component {
         this.returnUser = localStorage.getItem('user');
         if (this.returnUser !== null) {
             let newLikeArray = [...this.state.likes];
-            if (newLikeArray.includes(returnUser.id)) {
-                const index = newLikeArray.indexOf(returnUser.id);
+            if (newLikeArray.includes(returnUser.user.id)) {
+                const index = newLikeArray.indexOf(returnUser.user.id);
                 newLikeArray.splice(index, 1);
                 toastr.error("Мне не нравится", "-1");
             } else {
-                newLikeArray.push(returnUser.id);
+                newLikeArray.push(returnUser.user.id);
                 toastr.success("Мне нравится", "+1");
             }
             this.setState({
@@ -152,7 +152,7 @@ class SinglePost extends React.Component {
                         <li>Мне нравится</li>
                         <li id="heart">
                             <a id="heartLength" className="icon fa-heart"
-                               onClick={this.onClickLike}>{this.state.likes.length}</a>
+                               onClick={this.onClickLike}>{this.state.likes.length - 1}</a>
                         </li>
                     </ul>
                 </footer>

@@ -7,10 +7,10 @@ export default class Contacts extends React.Component {
                 <p>Присоединяйся к нашему сообществу</p>
                 <ul className="icons">
                     <li>
-                        <a href="https://vk.com/feed"
-                           className="fa-vk fa-2x"
+                        <a href="https://github.com"
+                           className="fa-github fa-2x"
                            target="_blank"
-                           rel="noopener noreferrer"><span className="label">VK</span></a>
+                           rel="noopener noreferrer"><span className="label">GitHub</span></a>
                     </li>
 
                     <li>
@@ -31,7 +31,7 @@ export default class Contacts extends React.Component {
                         <a href="https://www.linkedin.com"
                            className="fa-linkedin fa-2x"
                            target="_blank"
-                           rel="noopener noreferrer"><span className="label">Linkedin</span></a>
+                           rel="noopener noreferrer"><span className="label">LinkedIn</span></a>
                     </li>
                 </ul>
             </section>
