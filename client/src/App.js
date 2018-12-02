@@ -39,7 +39,7 @@ class App extends Component {
         });
         localStorage.clear();
         getLogout();
-        this.props.history.push('/')
+        window.location = "/"
     };
 
     render() {

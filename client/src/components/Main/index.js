@@ -28,29 +28,31 @@ export default class Main extends React.Component {
     }
 
     componentDidMount() {
-        getPaginationSummaries(this.state.limit, this.state.offset)
-            .then((res) => {
-                const summaries = res.data.summaries;
-                this.setState({
-                    count: res.data.count
-                });
-                const promiseSummariesArray = summaries.map((summary, index) => {
-                    return getAllCommentsToSummary(summary.id)
-                });
-                Promise.all(promiseSummariesArray)
-                    .then((allComments) => {
-                        summaries.forEach((item, index) => {
-                            item.commentCount = allComments[index].data.length;
-                        });
-                        this.setState({summaries: summaries});
+        if (this.state.summaries.length === 0) {
+            getPaginationSummaries(this.state.limit, this.state.offset)
+                .then((res) => {
+                    const summaries = res.data.summaries;
+                    this.setState({
+                        count: res.data.count
                     });
-                getPopularSummaries()
-                    .then((res) => {
-                        this.setState({
-                            popularSummaries: res.data
+                    const promiseSummariesArray = summaries.map((summary, index) => {
+                        return getAllCommentsToSummary(summary.id)
+                    });
+                    Promise.all(promiseSummariesArray)
+                        .then((allComments) => {
+                            summaries.forEach((item, index) => {
+                                item.commentCount = allComments[index].data.length;
+                            });
+                            this.setState({summaries: summaries});
+                        });
+                    getPopularSummaries()
+                        .then((res) => {
+                            this.setState({
+                                popularSummaries: res.data
+                            })
                         })
-                    })
-            });
+                });
+        }
     }
 
     checkAuthentication = () => {

@@ -27,12 +27,6 @@ router.get('/auth/github/callback', passport.authenticate('github', {
     failureRedirect: 'http://localhost:3000/login',
 }), safeRedirectToReturnTo);
 
-
-router.get('/auth/twitter', passport.authenticate('twitter', secrets.twitter.authOptions));
-router.get('/auth/twitter/callback', passport.authenticate('twitter', {
-    failureRedirect: 'http://localhost:3000/login',
-}), safeRedirectToReturnTo);
-
 router.get('/auth/linkedin', passport.authenticate('linkedin', secrets.linkedin.authOptions));
 router.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
     failureRedirect: 'http://localhost:3000/login',

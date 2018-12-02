@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt-nodejs');
+const crypto = require('crypto');
 
 const instanceMethods = {
     hasSetPassword: () => {
@@ -6,9 +7,9 @@ const instanceMethods = {
     }
 };
 
-const beforeSaveHook = (user, options, fn) => {
+const beforeSaveHook = function (user, options, fn) {
     if (user.changed('password')) {
-        this.encryptPassword(user.password, (hash, err) => {
+        this.encryptPassword(user.password, (hash, error) => {
             user.password = hash;
             fn(null, user);
         });
@@ -51,15 +52,11 @@ module.exports = (db, DataTypes) => {
             type: DataTypes.STRING,
             unique: true
         },
-        twitterId: {
+        githubId: {
             type: DataTypes.STRING,
             unique: true
         },
         linkedInId: {
-            type: DataTypes.STRING,
-            unique: true
-        },
-        githubId: {
             type: DataTypes.STRING,
             unique: true
         },
@@ -130,11 +127,6 @@ module.exports = (db, DataTypes) => {
                 name: 'facebookIdIndex',
                 method: 'BTREE',
                 fields: ['facebookId']
-            },
-            {
-                name: 'twitterIdIndex',
-                method: 'BTREE',
-                fields: ['twitterId']
             },
             {
                 name: 'githubIdIndex',

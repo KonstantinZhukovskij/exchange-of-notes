@@ -23,23 +23,13 @@ module.exports = {
         authOptions: {scope: ['email', 'user_location']}
     },
 
-    twitter: {
-        consumerKey: process.env.TWITTER_KEY || '---------------------',
-        consumerSecret: process.env.TWITTER_SECRET || '--------------------------',
-        callbackURL: 'http://localhost:3001/auth/twitter/callback',
-        passReqToCallback: true,
-        enableProof: true,
-        authOptions: {scope: ['email', 'user_location']}
-    },
-
     linkedin: {
-        clientID: process.env.LINKEDIN_ID || '86gqm6vc1be3vg',
-        clientSecret: process.env.LINKEDIN_SECRET || 'CgQbBzTqhSBF1e6K',
+        consumerKey: process.env.LINKEDIN_ID || '86gqm6vc1be3vg',
+        consumerSecret: process.env.LINKEDIN_SECRET || 'CgQbBzTqhSBF1e6K',
         callbackURL: process.env.LINKEDIN_CALLBACK_URL || 'http://localhost:3001/auth/linkedin/callback',
-        scope: ['r_basicprofile', 'r_emailaddress'],
         passReqToCallback: true,
         enableProof: true,
-        authOptions: {state: 'SOME STATE'}
+        authOptions: {scope: ['r_basicprofile', 'r_emailaddress', 'w_share']}
     },
 };
 

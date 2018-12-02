@@ -1,6 +1,6 @@
+const Sequelize = require('sequelize');
 const fs = require('fs');
 const path = require('path');
-const Sequelize = require('sequelize');
 const _ = require('lodash');
 const config = require('../../config/secrets');
 let db = {};

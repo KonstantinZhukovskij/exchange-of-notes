@@ -1,4 +1,5 @@
 import React from 'react';
+import toastr from "../../services/toastr";
 import {Link, withRouter} from 'react-router-dom';
 import {sendSearchQuery} from '../../services/axios';
 
@@ -38,16 +39,28 @@ class Header extends React.Component {
 
     onClickSearchQuery = (event) => {
         event.preventDefault();
-        sendSearchQuery(this.state.searchQuery)
-            .then((res) => {
-                this.props.history.push({
-                    pathname: '/',
-                    state: {summaries: res.data}
+        if (this.state.searchQuery !== '') {
+            sendSearchQuery(this.state.searchQuery)
+                .then((res) => {
+                    if (res.data.length !== 0) {
+                        this.props.history.push({
+                            pathname: '/',
+                            state: {summaries: res.data}
+                        });
+                        this.setState({
+                            searchQuery: ''
+                        })
+                    } else {
+                        toastr.warning("По Вашему запросу ничего не найдено");
+                        this.setState({
+                            searchQuery: ''
+                        })
+                    }
                 })
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        } else {
+            toastr.warning("Поле поиска не может быть пустым", "Внимание!");
+        }
+
     };
 
     onClickLogout = (event) => {
@@ -86,7 +99,7 @@ class Header extends React.Component {
                 <h1><Link to="/">Summaries</Link></h1>
                 <nav className="links">
                     <ul>
-                        {this.state.isUser && <CreateButton/>}
+                        {this.props.isLogged && <CreateButton/>}
                         <li><a href="https://gitter.im/Room-with-notes/Summary"
                                target="_blank"
                                rel="noopener noreferrer">Чат</a></li>
@@ -102,6 +115,7 @@ class Header extends React.Component {
                                 <input type="text"
                                        onChange={this.onChangeSearchQuery}
                                        name="query"
+                                       value={this.state.searchQuery}
                                        placeholder="Поиск"/>
                             </form>
                         </li>

@@ -2477,7 +2477,7 @@ body {
 }
 
 #imgMainPost {
-    width: 100%;
+    width: 40%;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -2491,7 +2491,7 @@ body {
 }
 
 #singlePostImage {
-    width: 100%;
+    width: 30%;
     display: block;
     margin-left: auto;
     margin-right: auto;

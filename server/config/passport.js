@@ -2,8 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GitHubStrategy = require('passport-github').Strategy;
-const TwitterStrategy = require('passport-twitter').Strategy;
-const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
+const LinkedInStrategy = require('passport-linkedin').Strategy;
 const secrets = require('./secrets');
 const db = require('../models/sequelize');
 const UserRepository = require('../repositories/UserRepository');
@@ -63,26 +62,6 @@ passport.use(new GitHubStrategy(secrets.github, (req, accessToken, refreshToken,
             });
     } else {
         UserRepository.createAccountFromGithub(accessToken, refreshToken, profile)
-            .then((user) => {
-                done(null, user);
-            })
-            .catch((error) => {
-                done(error);
-            });
-    }
-}));
-
-passport.use(new TwitterStrategy(secrets.twitter, (req, accessToken, tokenSecret, profile, done) => {
-    if (req.user) {
-        UserRepository.linkTwitterProfile(req.user.id, accessToken, tokenSecret, profile)
-            .then((user) => {
-                req.done(null, user);
-            })
-            .catch((error) => {
-                req.done(null, false, {message: error});
-            });
-    } else {
-        UserRepository.createAccountFromTwitter(accessToken, tokenSecret, profile)
             .then((user) => {
                 done(null, user);
             })
