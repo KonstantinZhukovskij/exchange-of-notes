@@ -105,3 +105,5 @@ node_modules
 Thumbs.db
 
 .env
+
+./server/config/secrets.js
