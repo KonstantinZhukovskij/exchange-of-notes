@@ -86,7 +86,14 @@ export default class UserPage extends React.Component {
 
     onClickUpdateAccount = (event) => {
         event.preventDefault();
-        putUpdateAccount(this.state)
+        let userData = {
+            id: this.state.id,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            gender: this.state.gender,
+            location: this.state.location,
+        };
+        putUpdateAccount(userData)
             .then((res) => {
                 this.setState({
                     firstName: res.data.firstName,
@@ -206,7 +213,7 @@ export default class UserPage extends React.Component {
                             <h2>Ваши конспекты</h2>
                             {this.state.allUserSummaries.map((summary, index) =>
                                 <UserSummaries id={summary.id}
-                                               description={summary.description}
+                                               title={summary.title}
                                                deleteSummary={this.deleteSummary}
                                                key={index}
                                 />)}

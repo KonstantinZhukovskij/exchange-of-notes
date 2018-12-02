@@ -66,19 +66,19 @@ export default class CreateSummariesPage extends React.Component {
                     <div className="sign">
                         <div className="container">
                             <h1>Создать конспект</h1>
-                            <label><b>Название предмета</b></label>
+                            <label><b>Название темы</b></label>
                             <input type="text"
                                    maxLength="50"
                                    onChange={this.onChangeTitle}
                                    value={this.state.title}
-                                   placeholder="Введите название предмета"
+                                   placeholder="Введите название темы"
                                    required/>
-                            <label><b>Тема</b></label>
+                            <label><b>Предмет</b></label>
                             <input type="text"
                                    maxLength="100"
                                    onChange={this.onChangeDescription}
                                    value={this.state.description}
-                                   placeholder="Кратко расскажите о теме Вашего конспекта"
+                                   placeholder="Название предмета"
                                    required/>
                             <label><b>Материал</b></label>
                             <TextEditor ref={'textEditorRef'}/>

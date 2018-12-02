@@ -26,7 +26,7 @@ class App extends Component {
                         isLogged: true,
                         user: res.data.user
                     });
-                    const serializedUser = JSON.stringify(res.data);
+                    const serializedUser = JSON.stringify(res.data.user);
                     localStorage.setItem('user', serializedUser);
                 }
             })

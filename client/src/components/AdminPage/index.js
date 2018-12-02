@@ -78,7 +78,7 @@ export default class AdminPage extends React.Component {
                             <h2>Список конспектов</h2>
                             {this.state.summaries.map((summary, index) =>
                                 <SummariesTable id={summary.id}
-                                                description={summary.description}
+                                                title={summary.title}
                                                 updateSummaries={this.updateSummaries}
                                                 key={index}
                                 />

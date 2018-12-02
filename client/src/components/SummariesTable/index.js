@@ -18,7 +18,7 @@ export default class SummariesTable extends React.Component {
             <div>
                 <div className="sign">
                     <input type="text"
-                           value={this.props.description}
+                           value={this.props.title}
                            disabled/>
                     <button id="deleteSummary" className="fas fa-trash-alt"
                             onClick={this.onClickDeleteSummary}>Удалить
