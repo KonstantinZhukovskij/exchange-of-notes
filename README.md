@@ -12,7 +12,7 @@
      ```
 * **Install dependencies**
      ```bash
-     yarn install
+     npm install
      ```
 * **Enter the folder**
      ```bash
@@ -20,7 +20,7 @@
      ```
 * **Install dependencies**
      ```bash
-     yarn install
+     npm install
      ```
 * **Run project**
     ```bash
@@ -34,8 +34,3 @@
 * **Express**
 * **React**
 * **PostgreSQL**
-
-
-# Foobar
-
-Foobar is a Python library for dealing with word pluralization.
