@@ -34,7 +34,6 @@ ReactDOM.render(
                     return returnUser ? <UserPage/> : <Redirect to={'/login'}/>
                 }}/>
                 <Route exact path="/admin" render={() => {
-                    console.log(returnUser)
                     return returnUser && returnUser.isAdmin ? <AdminPage/> : <Redirect to={'/'}/>
                 }}/>
                 <Route component={NotFoundPage}/>

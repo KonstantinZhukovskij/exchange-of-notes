@@ -10,7 +10,7 @@ export default class CreateSummariesPage extends React.Component {
         description: '',
         text: '',
         rawText: '',
-        imageSrc: 'https://i.ibb.co/YQ59L3n/600px-No-image-available-svg.png',
+        imageSrc: 'https://i.ibb.co/kGS6hrm/no-image-available.jpg',
         likes: [0]
     };
 

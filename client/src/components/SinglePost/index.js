@@ -61,7 +61,7 @@ class SinglePost extends React.Component {
             const newComment = {
                 text: this.state.comment,
                 summaryId: this.props.match.params.id,
-                authorId: returnUser.user.id
+                authorId: returnUser.id
             };
             if (this.state.comment.length > 5) {
                 createComment(newComment)
@@ -98,12 +98,12 @@ class SinglePost extends React.Component {
         this.returnUser = localStorage.getItem('user');
         if (this.returnUser !== null) {
             let newLikeArray = [...this.state.likes];
-            if (newLikeArray.includes(returnUser.user.id)) {
-                const index = newLikeArray.indexOf(returnUser.user.id);
+            if (newLikeArray.includes(returnUser.id)) {
+                const index = newLikeArray.indexOf(returnUser.id);
                 newLikeArray.splice(index, 1);
                 toastr.error("Мне не нравится", "-1");
             } else {
-                newLikeArray.push(returnUser.user.id);
+                newLikeArray.push(returnUser.id);
                 toastr.success("Мне нравится", "+1");
             }
             this.setState({
@@ -137,10 +137,10 @@ class SinglePost extends React.Component {
                         <p className="author"><span className="name">Автор: {author}</span></p>
                     </div>
                 </header>
-                <a className="image featured" id="singlePostImage">
-                    <img src={this.state.imageSrc} alt="summary"/>
-                </a>
-                <hr/>
+                {/*<a className="image featured" id="singlePostImage">*/}
+                {/*<img src={this.state.imageSrc} alt="summary"/>*/}
+                {/*</a>*/}
+                {/*<hr/>*/}
                 <ul className="actions">
                     <div id="previewSummary">
                         <PreviewSummary text={this.state.text}/>

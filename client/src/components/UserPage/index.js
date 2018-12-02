@@ -2,13 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import toastr from '../../services/toastr'
 import UserSummaries from "../UserSummaries";
-import {
-    deleteSummaryById,
-    getAllAuthorSummaries,
-    getUserById,
-    putUpdateAccount,
-    putUpdatePassword
-} from '../../services/axios'
+import {getAllAuthorSummaries, getUserById, putUpdateAccount, putUpdatePassword} from '../../services/axios'
 
 export default class UserPage extends React.Component {
     state = {
@@ -111,7 +105,12 @@ export default class UserPage extends React.Component {
     onClickUpdatePassword = (event) => {
         event.preventDefault();
         if (this.state.password && this.state.confirmPassword !== null) {
-            putUpdatePassword(this.state)
+            let passwordData = {
+                id: this.state.id,
+                password: this.state.password,
+                confirmPassword: this.state.confirmPassword,
+            };
+            putUpdatePassword(passwordData)
                 .then(() => {
                     this.setState({
                         password: '',
@@ -127,19 +126,11 @@ export default class UserPage extends React.Component {
         }
     };
 
-    deleteSummary = (summaryId) => {
-        deleteSummaryById(summaryId)
-            .then(() => {
-                this.updateSummaries();
-                toastr.success("Конспект успешно удалён");
-            })
-    };
-
     updateSummaries = () => {
         getAllAuthorSummaries(this.state.user.id)
             .then((res) => {
                 this.setState({
-                    allUserSummaries: res.data.allUserSummaries ? res.data.allUserSummaries : []
+                    allUserSummaries: res.data ? res.data : []
                 })
             })
     };
@@ -214,7 +205,7 @@ export default class UserPage extends React.Component {
                             {this.state.allUserSummaries.map((summary, index) =>
                                 <UserSummaries id={summary.id}
                                                title={summary.title}
-                                               deleteSummary={this.deleteSummary}
+                                               updateSummaries={this.updateSummaries}
                                                key={index}
                                 />)}
                         </form>
